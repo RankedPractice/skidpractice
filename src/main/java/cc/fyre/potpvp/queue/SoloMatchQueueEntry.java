@@ -7,8 +7,6 @@
  */
 package cc.fyre.potpvp.queue;
 
-import cc.fyre.potpvp.queue.MatchQueue;
-import cc.fyre.potpvp.queue.MatchQueueEntry;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import java.util.Set;
@@ -20,12 +18,12 @@ extends MatchQueueEntry {
 
     SoloMatchQueueEntry(MatchQueue queue, UUID player) {
         super(queue);
-        this.player = (UUID)Preconditions.checkNotNull((Object)player, (Object)"player");
+        this.player = (UUID)Preconditions.checkNotNull((Object)player, "player");
     }
 
     @Override
     public Set<UUID> getMembers() {
-        return ImmutableSet.of((Object)this.player);
+        return ImmutableSet.of(this.player);
     }
 
     public UUID getPlayer() {

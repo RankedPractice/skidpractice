@@ -35,12 +35,12 @@ public final class PartyUtils {
         if (!PotPvPValidation.canStartTeamSplit(party, initiator)) {
             return;
         }
-        new SelectKitTypeMenu((Callback<KitType>)((Callback)kitType -> {
+        new SelectKitTypeMenu((kitType -> {
             initiator.closeInventory();
             if (party.getMembers().size() % 2 == 0) {
                 PartyUtils.startTeamSplit(party, initiator, kitType, false);
             } else {
-                new OddManOutMenu((Callback<Boolean>)((Callback)oddManOut -> {
+                new OddManOutMenu((oddManOut -> {
                     initiator.closeInventory();
                     PartyUtils.startTeamSplit(party, initiator, kitType, oddManOut);
                 })).openMenu(initiator);
@@ -70,7 +70,7 @@ public final class PartyUtils {
                 team1.add((UUID)members2.remove(0));
             }
         }
-        if ((match = PotPvP.getInstance().getMatchHandler().startMatch((List<MatchTeam>)ImmutableList.of((Object)new MatchTeam(0, team1), (Object)new MatchTeam(1, team2)), kitType, null, QueueType.UNRANKED, false)) == null) {
+        if ((match = PotPvP.getInstance().getMatchHandler().startMatch(ImmutableList.of(new MatchTeam(0, team1), new MatchTeam(1, team2)), kitType, null, QueueType.UNRANKED, false)) == null) {
             initiator.sendMessage(ChatColor.RED + "Failed to start team split.");
             return;
         }

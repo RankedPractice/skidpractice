@@ -24,7 +24,7 @@ public final class LobbyItems {
     public static final ItemStack ENABLE_SPEC_MODE_ITEM = new ItemStack(Material.REDSTONE_TORCH_ON);
     public static final ItemStack DISABLE_SPEC_MODE_ITEM = new ItemStack(Material.LEVER);
     public static final ItemStack UNFOLLOW_ITEM = new ItemStack(Material.INK_SACK, 1, (short)DyeColor.RED.getDyeData());
-    public static final ItemStack PLAYER_STATISTICS = new ItemStack(Material.SKULL_ITEM, 1, 3);
+    public static final ItemStack PLAYER_STATISTICS = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 
     private LobbyItems() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");

@@ -103,23 +103,23 @@ implements Listener {
         if (document == null) {
             document = new Document();
         }
-        document.put("lastUsername", (Object)FrozenUUIDCache.name((UUID)uuid));
+        document.put("lastUsername", FrozenUUIDCache.name((UUID)uuid));
         Document finalDocument = document;
         HashMap subStatisticsMap = Maps.newHashMap();
         KitType.getAllTypes().forEach(kitType -> {
-            Document subStatisticsDocument = finalDocument.containsKey(kitType.getId()) ? (Document)((Object)finalDocument.get((Object)kitType.getId(), Document.class)) : new Document();
+            Document subStatisticsDocument = finalDocument.containsKey(kitType.getId()) ? (Document)(finalDocument.get(kitType.getId(), Document.class)) : new Document();
             HashMap statsMap = Maps.newHashMap();
             for (Statistic statistic : Statistic.values()) {
-                Double value = (Double)Objects.firstNonNull((Object)((Double)((Object)subStatisticsDocument.get((Object)statistic.name(), Double.class))), (Object)0.0);
+                Double value = (Double)Objects.firstNonNull(((Double)(subStatisticsDocument.get(statistic.name(), Double.class))), 0.0);
                 statsMap.put(statistic, value);
             }
             subStatisticsMap.put(kitType.getId(), statsMap);
         });
         if (finalDocument.containsKey("GLOBAL")) {
-            Document subStatisticsDocument = finalDocument.containsKey("GLOBAL") ? (Document)((Object)finalDocument.get((Object)"GLOBAL", Document.class)) : new Document();
+            Document subStatisticsDocument = finalDocument.containsKey("GLOBAL") ? (Document)(finalDocument.get("GLOBAL", Document.class)) : new Document();
             HashMap statsMap = Maps.newHashMap();
             for (Statistic statistic : Statistic.values()) {
-                Double value = (Double)Objects.firstNonNull((Object)((Double)((Object)subStatisticsDocument.get((Object)statistic.name(), Double.class))), (Object)0.0);
+                Double value = (Double)Objects.firstNonNull(((Double)(subStatisticsDocument.get(statistic.name(), Double.class))), 0.0);
                 statsMap.put(statistic, value);
             }
             subStatisticsMap.put("GLOBAL", statsMap);
@@ -137,10 +137,10 @@ implements Listener {
         Document toInsert = new Document();
         subMap.entrySet().forEach(entry -> {
             Document typeStats = new Document();
-            ((Map)entry.getValue()).entrySet().forEach(subEntry -> typeStats.put(((Statistic)((Object)((Object)((Object)subEntry.getKey())))).name(), subEntry.getValue()));
-            toInsert.put((String)entry.getKey(), (Object)typeStats);
+            (entry.getValue()).entrySet().forEach(subEntry -> typeStats.put(((Statistic)(((subEntry.getKey())))).name(), subEntry.getValue()));
+            toInsert.put((String)entry.getKey(), typeStats);
         });
-        toInsert.put("lastUsername", (Object)FrozenUUIDCache.name((UUID)uuid));
+        toInsert.put("lastUsername", FrozenUUIDCache.name((UUID)uuid));
         COLLECTION.updateOne(new Document("_id", uuid.toString()), (Bson)new Document("$set", toInsert), MongoUtils.UPSERT_OPTIONS);
     }
 
@@ -188,11 +188,11 @@ implements Listener {
 
     private void incrementEntry(UUID uuid, String primaryKey, Statistic statistic) {
         Map<Statistic, Double> subMap = this.statisticsMap.get(uuid).get(primaryKey);
-        subMap.put(statistic, subMap.getOrDefault((Object)statistic, 0.0) + 1.0);
+        subMap.put(statistic, subMap.getOrDefault(statistic, 0.0) + 1.0);
     }
 
     public double getStat(UUID uuid, Statistic statistic, String kitType) {
-        return (Double)Objects.firstNonNull((Object)this.statisticsMap.getOrDefault(uuid, (Map<String, Map<Statistic, Double>>)ImmutableMap.of()).getOrDefault(kitType, (Map<Statistic, Double>)ImmutableMap.of()).get((Object)statistic), (Object)0.0);
+        return (Double)Objects.firstNonNull(this.statisticsMap.getOrDefault(uuid, ImmutableMap.of()).getOrDefault(kitType, ImmutableMap.of()).get(statistic), 0.0);
     }
 
     private static enum Statistic {

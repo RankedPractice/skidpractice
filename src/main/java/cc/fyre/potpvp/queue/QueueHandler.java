@@ -51,11 +51,11 @@ public final class QueueHandler {
         Bukkit.getPluginManager().registerEvents((Listener)new QueueGeneralListener(this), (Plugin)PotPvP.getInstance());
         Bukkit.getPluginManager().registerEvents((Listener)new QueueItemListener(this), (Plugin)PotPvP.getInstance());
         for (KitType kitType : KitType.getAllTypes()) {
-            this.soloQueues.put((Object)kitType, (Object)QueueType.PREMIUM, (Object)new MatchQueue(kitType, QueueType.PREMIUM));
-            this.soloQueues.put((Object)kitType, (Object)QueueType.RANKED, (Object)new MatchQueue(kitType, QueueType.RANKED));
-            this.soloQueues.put((Object)kitType, (Object)QueueType.UNRANKED, (Object)new MatchQueue(kitType, QueueType.UNRANKED));
-            this.partyQueues.put((Object)kitType, (Object)QueueType.RANKED, (Object)new MatchQueue(kitType, QueueType.RANKED));
-            this.partyQueues.put((Object)kitType, (Object)QueueType.UNRANKED, (Object)new MatchQueue(kitType, QueueType.UNRANKED));
+            this.soloQueues.put(kitType, QueueType.PREMIUM, new MatchQueue(kitType, QueueType.PREMIUM));
+            this.soloQueues.put(kitType, QueueType.RANKED, new MatchQueue(kitType, QueueType.RANKED));
+            this.soloQueues.put(kitType, QueueType.UNRANKED, new MatchQueue(kitType, QueueType.UNRANKED));
+            this.partyQueues.put(kitType, QueueType.RANKED, new MatchQueue(kitType, QueueType.RANKED));
+            this.partyQueues.put(kitType, QueueType.UNRANKED, new MatchQueue(kitType, QueueType.UNRANKED));
         }
         Bukkit.getScheduler().runTaskTimer((Plugin)PotPvP.getInstance(), () -> {
             this.soloQueues.values().forEach(MatchQueue::tick);
@@ -72,32 +72,32 @@ public final class QueueHandler {
     }
 
     public void addQueues(KitType kitType) {
-        this.soloQueues.put((Object)kitType, (Object)QueueType.PREMIUM, (Object)new MatchQueue(kitType, QueueType.PREMIUM));
-        this.soloQueues.put((Object)kitType, (Object)QueueType.RANKED, (Object)new MatchQueue(kitType, QueueType.RANKED));
-        this.soloQueues.put((Object)kitType, (Object)QueueType.UNRANKED, (Object)new MatchQueue(kitType, QueueType.UNRANKED));
-        this.partyQueues.put((Object)kitType, (Object)QueueType.RANKED, (Object)new MatchQueue(kitType, QueueType.RANKED));
-        this.partyQueues.put((Object)kitType, (Object)QueueType.UNRANKED, (Object)new MatchQueue(kitType, QueueType.UNRANKED));
+        this.soloQueues.put(kitType, QueueType.PREMIUM, new MatchQueue(kitType, QueueType.PREMIUM));
+        this.soloQueues.put(kitType, QueueType.RANKED, new MatchQueue(kitType, QueueType.RANKED));
+        this.soloQueues.put(kitType, QueueType.UNRANKED, new MatchQueue(kitType, QueueType.UNRANKED));
+        this.partyQueues.put(kitType, QueueType.RANKED, new MatchQueue(kitType, QueueType.RANKED));
+        this.partyQueues.put(kitType, QueueType.UNRANKED, new MatchQueue(kitType, QueueType.UNRANKED));
     }
 
     public void removeQueues(KitType kitType) {
-        this.soloQueues.remove((Object)kitType, (Object)true);
-        this.soloQueues.remove((Object)kitType, (Object)false);
-        this.partyQueues.remove((Object)kitType, (Object)true);
-        this.partyQueues.remove((Object)kitType, (Object)false);
+        this.soloQueues.remove(kitType, true);
+        this.soloQueues.remove(kitType, false);
+        this.partyQueues.remove(kitType, true);
+        this.partyQueues.remove(kitType, false);
     }
 
     public int countPlayersQueued(KitType kitType, QueueType queueType) {
         if (queueType.isPremium()) {
-            return ((MatchQueue)this.soloQueues.get((Object)kitType, (Object)queueType)).countPlayersQueued();
+            return ((MatchQueue)this.soloQueues.get(kitType, queueType)).countPlayersQueued();
         }
-        return ((MatchQueue)this.soloQueues.get((Object)kitType, (Object)queueType)).countPlayersQueued() + ((MatchQueue)this.partyQueues.get((Object)kitType, (Object)queueType)).countPlayersQueued();
+        return ((MatchQueue)this.soloQueues.get(kitType, queueType)).countPlayersQueued() + ((MatchQueue)this.partyQueues.get(kitType, queueType)).countPlayersQueued();
     }
 
     public boolean joinQueue(Player player, KitType kitType, QueueType queueType) {
         if (!PotPvPValidation.canJoinQueue(player)) {
             return false;
         }
-        MatchQueue queue = (MatchQueue)this.soloQueues.get((Object)kitType, (Object)queueType);
+        MatchQueue queue = (MatchQueue)this.soloQueues.get(kitType, queueType);
         SoloMatchQueueEntry entry = new SoloMatchQueueEntry(queue, player.getUniqueId());
         if (queueType.isPremium()) {
             PotPvP.getInstance().getPremiumMatchesHandler().removePremiumMatches(player.getUniqueId(), 1);
@@ -131,7 +131,7 @@ public final class QueueHandler {
         if (!PotPvPValidation.canJoinQueue(party)) {
             return false;
         }
-        MatchQueue queue = (MatchQueue)this.partyQueues.get((Object)kitType, (Object)ranked);
+        MatchQueue queue = (MatchQueue)this.partyQueues.get(kitType, ranked);
         PartyMatchQueueEntry entry = new PartyMatchQueueEntry(queue, party);
         queue.addToQueue(entry);
         this.partyQueueCache.put(party, entry);

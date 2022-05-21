@@ -29,7 +29,7 @@ extends Button {
     private final ArenaSchematic schematic;
 
     ToggleEnabledButton(ArenaSchematic schematic) {
-        this.schematic = (ArenaSchematic)Preconditions.checkNotNull((Object)schematic, (Object)"schematic");
+        this.schematic = (ArenaSchematic)Preconditions.checkNotNull(schematic, "schematic");
     }
 
     public String getName(Player player) {
@@ -41,9 +41,9 @@ extends Button {
 
     public List<String> getDescription(Player player) {
         if (this.schematic.isEnabled()) {
-            return ImmutableList.of((Object)"", (Object)(ChatColor.YELLOW + "Click to disable " + this.schematic.getName() + ", which will prevent matches"), (Object)(ChatColor.YELLOW + "being scheduled on these arenas. Admin"), (Object)(ChatColor.YELLOW + "commands will not be impacted."));
+            return ImmutableList.of("", (ChatColor.YELLOW + "Click to disable " + this.schematic.getName() + ", which will prevent matches"), (ChatColor.YELLOW + "being scheduled on these arenas. Admin"), (ChatColor.YELLOW + "commands will not be impacted."));
         }
-        return ImmutableList.of((Object)"", (Object)(ChatColor.YELLOW + "Click to enable " + this.schematic.getName() + ", which will allow matches"), (Object)(ChatColor.YELLOW + "to be scheduled on these arenas."));
+        return ImmutableList.of("", (ChatColor.YELLOW + "Click to enable " + this.schematic.getName() + ", which will allow matches"), (ChatColor.YELLOW + "to be scheduled on these arenas."));
     }
 
     public Material getMaterial(Player player) {

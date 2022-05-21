@@ -44,7 +44,7 @@ extends Button {
 
     public void clicked(@NotNull Player player, int slot, @NotNull ClickType clickType) {
         player.closeInventory();
-        this.callback.callback((Object)this.schematic);
+        this.callback.callback(this.schematic);
     }
 
     public ArenaButton(ArenaSchematic schematic, Callback<ArenaSchematic> callback) {

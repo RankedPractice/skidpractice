@@ -46,14 +46,14 @@ implements BiConsumer<Player, LinkedList<String>> {
         PartyHandler partyHandler = PotPvP.getInstance().getPartyHandler();
         QueueHandler queueHandler = PotPvP.getInstance().getQueueHandler();
         EloHandler eloHandler = PotPvP.getInstance().getEloHandler();
-        scores.add((Object)("&fOnline: &b" + LAST_ONLINE_COUNT));
-        scores.add((Object)("&fIn Fights: &b" + LAST_IN_FIGHTS_COUNT));
-        scores.add((Object)("&fPremium Matches: &b" + PREMIUM_MATCHES_COUNT));
+        scores.add(("&fOnline: &b" + LAST_ONLINE_COUNT));
+        scores.add(("&fIn Fights: &b" + LAST_IN_FIGHTS_COUNT));
+        scores.add(("&fPremium Matches: &b" + PREMIUM_MATCHES_COUNT));
         Party playerParty = partyHandler.getParty(player);
         if (playerParty != null) {
             int size = playerParty.getMembers().size();
-            scores.add((Object)"");
-            scores.add((Object)("&9Your Party: &b" + size));
+            scores.add("");
+            scores.add(("&9Your Party: &b" + size));
         }
         if (1000L <= System.currentTimeMillis() - this.lastUpdated) {
             this.lastUpdated = System.currentTimeMillis();
@@ -65,56 +65,56 @@ implements BiConsumer<Player, LinkedList<String>> {
         if (followingOpt.isPresent()) {
             MatchQueueEntry targetEntry;
             Player following = Bukkit.getPlayer((UUID)followingOpt.get());
-            scores.add((Object)("Following: &6" + following.getName()));
+            scores.add(("Following: &6" + following.getName()));
             if (player.hasPermission("stark.staff") && (targetEntry = this.getQueueEntry(following)) != null) {
                 queue = targetEntry.getQueue();
-                scores.add((Object)"Target queue:");
-                scores.add((Object)("&a" + queue.getQueueType().getName() + " " + queue.getKitType().getDisplayName()));
+                scores.add("Target queue:");
+                scores.add(("&a" + queue.getQueueType().getName() + " " + queue.getKitType().getDisplayName()));
             }
         }
         if ((entry = this.getQueueEntry(player)) != null) {
             int elo;
             String waitTimeFormatted = TimeUtils.formatIntoMMSS((int)entry.getWaitSeconds());
             queue = entry.getQueue();
-            scores.add((Object)"&b&7&m--------------------");
-            scores.add((Object)(queue.getKitType().getDisplayColor() + queue.getQueueType().getName() + " " + queue.getKitType().getDisplayName()));
-            scores.add((Object)("Time: " + ChatColor.BLUE + waitTimeFormatted));
+            scores.add("&b&7&m--------------------");
+            scores.add((queue.getKitType().getDisplayColor() + queue.getQueueType().getName() + " " + queue.getKitType().getDisplayName()));
+            scores.add(("Time: " + ChatColor.BLUE + waitTimeFormatted));
             if (queue.getQueueType().isRanked()) {
                 elo = eloHandler.getElo(entry.getMembers(), queue.getKitType());
                 int window = entry.getWaitSeconds() * 5;
-                scores.add((Object)("Range: &b" + Math.max(0, elo - window) + " &7- &b" + (elo + window)));
+                scores.add(("Range: &b" + Math.max(0, elo - window) + " &7- &b" + (elo + window)));
             } else if (queue.getQueueType().isPremium()) {
                 elo = eloHandler.getPremiumElo(entry.getMembers(), queue.getKitType());
                 int window = entry.getWaitSeconds() * 5;
-                scores.add((Object)("Range: &b" + Math.max(0, elo - window) + " &7- &b" + (elo + window)));
+                scores.add(("Range: &b" + Math.max(0, elo - window) + " &7- &b" + (elo + window)));
             }
         }
         if (player.hasMetadata("ModMode")) {
-            scores.add((Object)(ChatColor.GOLD + "Silent Mode Enabled"));
+            scores.add((ChatColor.GOLD + "Silent Mode Enabled"));
         }
         if ((tournament = PotPvP.getInstance().getTournamentHandler().getTournament()) != null) {
             int multiplier;
-            scores.add((Object)"&5&7&m--------------------");
-            scores.add((Object)"&b&lTournament");
+            scores.add("&5&7&m--------------------");
+            scores.add("&b&lTournament");
             if (tournament.getStage() == Tournament.TournamentStage.WAITING_FOR_TEAMS) {
                 int teamSize = tournament.getRequiredPartySize();
-                scores.add((Object)("Kit: &b" + tournament.getType().getDisplayName()));
-                scores.add((Object)("Team Size: &b" + teamSize + "v" + teamSize));
+                scores.add(("Kit: &b" + tournament.getType().getDisplayName()));
+                scores.add(("Team Size: &b" + teamSize + "v" + teamSize));
                 multiplier = teamSize < 3 ? teamSize : 1;
-                scores.add((Object)((teamSize < 3 ? "Players" : "Teams") + ": &b" + tournament.getActiveParties().size() * multiplier + "/" + tournament.getRequiredPartiesToStart() * multiplier));
+                scores.add(((teamSize < 3 ? "Players" : "Teams") + ": &b" + tournament.getActiveParties().size() * multiplier + "/" + tournament.getRequiredPartiesToStart() * multiplier));
             } else if (tournament.getStage() == Tournament.TournamentStage.COUNTDOWN) {
                 if (tournament.getCurrentRound() == 0) {
-                    scores.add((Object)("Begins in &b" + tournament.getBeginNextRoundIn() + "&f second" + (tournament.getBeginNextRoundIn() == 1 ? "" : "s")));
+                    scores.add(("Begins in &b" + tournament.getBeginNextRoundIn() + "&f second" + (tournament.getBeginNextRoundIn() == 1 ? "" : "s")));
                 } else {
-                    scores.add((Object)("Next Round: &b" + (tournament.getCurrentRound() + 1)));
-                    scores.add((Object)("Begins in &b" + tournament.getBeginNextRoundIn() + "&f second" + (tournament.getBeginNextRoundIn() == 1 ? "" : "s")));
+                    scores.add(("Next Round: &b" + (tournament.getCurrentRound() + 1)));
+                    scores.add(("Begins in &b" + tournament.getBeginNextRoundIn() + "&f second" + (tournament.getBeginNextRoundIn() == 1 ? "" : "s")));
                 }
             } else if (tournament.getStage() == Tournament.TournamentStage.IN_PROGRESS) {
-                scores.add((Object)("Round: &6" + tournament.getCurrentRound()));
+                scores.add(("Round: &6" + tournament.getCurrentRound()));
                 int teamSize = tournament.getRequiredPartySize();
                 multiplier = teamSize < 3 ? teamSize : 1;
-                scores.add((Object)((teamSize < 3 ? "Players" : "Teams") + ": &6" + tournament.getActiveParties().size() * multiplier + "/" + tournament.getRequiredPartiesToStart() * multiplier));
-                scores.add((Object)("Duration: &b" + TimeUtils.formatIntoMMSS((int)((int)(System.currentTimeMillis() - tournament.getRoundStartedAt()) / 1000))));
+                scores.add(((teamSize < 3 ? "Players" : "Teams") + ": &6" + tournament.getActiveParties().size() * multiplier + "/" + tournament.getRequiredPartiesToStart() * multiplier));
+                scores.add(("Duration: &b" + TimeUtils.formatIntoMMSS((int)((int)(System.currentTimeMillis() - tournament.getRoundStartedAt()) / 1000))));
             }
         }
     }

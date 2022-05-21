@@ -72,10 +72,10 @@ implements BiConsumer<Player, LinkedList<String>> {
         Match match = matchHandler.getMatchPlayingOrSpectating(player);
         if (match == null) {
             if (followingOpt.isPresent()) {
-                scores.add((Object)("&fFollowing: &6" + FrozenUUIDCache.name((UUID)followingOpt.get())));
+                scores.add(("&fFollowing: &6" + FrozenUUIDCache.name((UUID)followingOpt.get())));
             }
             if (player.hasMetadata("ModMode")) {
-                scores.add((Object)"&6Silent Mode Enabled");
+                scores.add("&6Silent Mode Enabled");
             }
             return;
         }
@@ -91,10 +91,10 @@ implements BiConsumer<Player, LinkedList<String>> {
             this.renderPingLines((List<String>)scores, match, player);
         }
         if (followingOpt.isPresent()) {
-            scores.add((Object)("&fFollowing: &6" + FrozenUUIDCache.name((UUID)followingOpt.get())));
+            scores.add(("&fFollowing: &6" + FrozenUUIDCache.name((UUID)followingOpt.get())));
         }
         if (player.hasMetadata("ModMode")) {
-            scores.add((Object)"&6Silent Mode Enabled");
+            scores.add("&6Silent Mode Enabled");
         }
     }
 
@@ -395,7 +395,7 @@ implements BiConsumer<Player, LinkedList<String>> {
     public String getArcherMarkScore(Player player) {
         long diff;
         if (ArcherClass.isMarked(player) && (diff = ArcherClass.getMarkedPlayers().get(player.getName()) - System.currentTimeMillis()) > 0L) {
-            return ScoreFunction.TIME_FANCY.apply((Object)Float.valueOf((float)diff / 1000.0f));
+            return ScoreFunction.TIME_FANCY.apply(Float.valueOf((float)diff / 1000.0f));
         }
         return null;
     }
@@ -403,7 +403,7 @@ implements BiConsumer<Player, LinkedList<String>> {
     public String getBardEffectScore(Player player) {
         float diff;
         if (BardClass.getLastEffectUsage().containsKey(player.getName()) && BardClass.getLastEffectUsage().get(player.getName()) >= System.currentTimeMillis() && (diff = (float)(BardClass.getLastEffectUsage().get(player.getName()) - System.currentTimeMillis())) > 0.0f) {
-            return ScoreFunction.TIME_SIMPLE.apply((Object)Float.valueOf(diff / 1000.0f));
+            return ScoreFunction.TIME_SIMPLE.apply(Float.valueOf(diff / 1000.0f));
         }
         return null;
     }

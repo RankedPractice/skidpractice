@@ -31,7 +31,7 @@ extends Button {
     }
 
     public List<String> getDescription(Player player) {
-        return ImmutableList.of((Object)"", (Object)(ChatColor.YELLOW + "Click this to abort editing this kit type."));
+        return ImmutableList.of("", (ChatColor.YELLOW + "Click this to abort editing this kit type."));
     }
 
     public Material getMaterial(Player player) {

@@ -21,8 +21,6 @@ import java.util.stream.Collectors;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
-import rip.bridge.bridge.BridgeGlobal;
-import rip.bridge.bridge.global.profile.Profile;
 import rip.bridge.qlib.uuid.FrozenUUIDCache;
 
 public class PatchedPlayerUtils {
@@ -76,11 +74,11 @@ public class PatchedPlayerUtils {
     }
 
     public static String getFormattedName(UUID uuid) {
-        Profile profile = BridgeGlobal.getProfileHandler().getProfileByUUID(uuid);
+        /*Profile profile = BridgeGlobal.getProfileHandler().getProfileByUUID(uuid);
         if (profile != null) {
             return profile.getColor() + profile.getUsername();
-        }
-        return FrozenUUIDCache.name((UUID)uuid);
+        }*/
+        return FrozenUUIDCache.name(uuid);
     }
 }
 

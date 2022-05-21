@@ -191,7 +191,7 @@ public class Tournament {
         while (1 < oldPartyList.size()) {
             Party firstParty = (Party)oldPartyList.remove(0);
             Party secondParty = (Party)oldPartyList.remove(0);
-            this.matches.add(PotPvP.getInstance().getMatchHandler().startMatch((List<MatchTeam>)ImmutableList.of((Object)new MatchTeam(0, firstParty.getMembers()), (Object)new MatchTeam(1, secondParty.getMembers())), this.type, null, QueueType.UNRANKED, false));
+            this.matches.add(PotPvP.getInstance().getMatchHandler().startMatch((List<MatchTeam>)ImmutableList.of(new MatchTeam(0, firstParty.getMembers()), new MatchTeam(1, secondParty.getMembers())), this.type, null, QueueType.UNRANKED, false));
         }
         if (oldPartyList.size() == 1) {
             ((Party)oldPartyList.get(0)).message(ChatColor.RED + "There were an odd number of teams in this round - so your team has advanced to the next round.");

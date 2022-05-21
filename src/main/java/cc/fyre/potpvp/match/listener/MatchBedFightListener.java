@@ -23,8 +23,6 @@ import cc.fyre.potpvp.match.Match;
 import cc.fyre.potpvp.match.MatchHandler;
 import cc.fyre.potpvp.match.MatchTeam;
 import cc.fyre.potpvp.util.CC;
-import com.lunarclient.bukkitapi.LunarClientAPI;
-import com.lunarclient.bukkitapi.object.TitleType;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.UUID;
@@ -66,8 +64,7 @@ implements Listener {
                 for (UUID allMember : oppositeTeam.getAllMembers()) {
                     Player member = Bukkit.getPlayer(allMember);
                     if (member == null) continue;
-                    LunarClientAPI.getInstance().sendTitle(member, TitleType.TITLE, CC.translate("&cBed Broken"), Duration.of(2L, ChronoUnit.SECONDS));
-                    LunarClientAPI.getInstance().sendTitle(member, TitleType.SUBTITLE, CC.translate("&7You will no longer respawn"), Duration.of(2L, ChronoUnit.SECONDS));
+                    member.sendMessage("bed broken");
                     member.playSound(member.getLocation(), Sound.ENDERDRAGON_GROWL, 2.0f, 2.0f);
                 }
                 event.getBlock().setType(Material.AIR);

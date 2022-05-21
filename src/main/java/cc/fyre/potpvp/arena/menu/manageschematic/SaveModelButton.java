@@ -28,7 +28,7 @@ extends Button {
     private final ArenaSchematic schematic;
 
     SaveModelButton(ArenaSchematic schematic) {
-        this.schematic = (ArenaSchematic)Preconditions.checkNotNull((Object)schematic, (Object)"schematic");
+        this.schematic = (ArenaSchematic)Preconditions.checkNotNull(schematic, "schematic");
     }
 
     public String getName(Player player) {
@@ -36,7 +36,7 @@ extends Button {
     }
 
     public List<String> getDescription(Player player) {
-        return ImmutableList.of((Object)"", (Object)(ChatColor.YELLOW + "Click to save the model arena"));
+        return ImmutableList.of("", (ChatColor.YELLOW + "Click to save the model arena"));
     }
 
     public Material getMaterial(Player player) {

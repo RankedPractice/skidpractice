@@ -29,7 +29,7 @@ extends Button {
     private final ArenaSchematic schematic;
 
     CreateCopiesButton(ArenaSchematic schematic) {
-        this.schematic = (ArenaSchematic)Preconditions.checkNotNull((Object)schematic, (Object)"schematic");
+        this.schematic = (ArenaSchematic)Preconditions.checkNotNull(schematic, "schematic");
     }
 
     public String getName(Player player) {
@@ -37,7 +37,7 @@ extends Button {
     }
 
     public List<String> getDescription(Player player) {
-        return ImmutableList.of((Object)"", (Object)(ChatColor.GREEN.toString() + ChatColor.BOLD + "CLICK " + ChatColor.GREEN + "to create 1 new copy"), (Object)(ChatColor.GREEN.toString() + ChatColor.BOLD + "SHIFT-CLICK " + ChatColor.GREEN + "to create 10 new copies"), (Object)"", (Object)(ChatColor.AQUA + "Scale directly to a desired quantity"), (Object)(ChatColor.AQUA + "with /arena scale " + this.schematic.getName() + " <count>"));
+        return ImmutableList.of("", (ChatColor.GREEN.toString() + ChatColor.BOLD + "CLICK " + ChatColor.GREEN + "to create 1 new copy"), (ChatColor.GREEN.toString() + ChatColor.BOLD + "SHIFT-CLICK " + ChatColor.GREEN + "to create 10 new copies"), "", (ChatColor.AQUA + "Scale directly to a desired quantity"), (ChatColor.AQUA + "with /arena scale " + this.schematic.getName() + " <count>"));
     }
 
     public Material getMaterial(Player player) {

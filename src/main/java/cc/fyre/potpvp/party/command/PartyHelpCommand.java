@@ -17,11 +17,20 @@ import org.bukkit.entity.Player;
 import rip.bridge.qlib.command.Command;
 
 public final class PartyHelpCommand {
-    private static final List<String> HELP_MESSAGE = ImmutableList.of((Object)(ChatColor.DARK_PURPLE + PotPvPLang.LONG_LINE), (Object)"\u00a7d\u00a7lParty Help \u00a77- \u00a7fInformation on how to use party commands", (Object)(ChatColor.DARK_PURPLE + PotPvPLang.LONG_LINE), (Object)"\u00a79Party Commands:", (Object)"\u00a7e/party invite \u00a77- Invite a player to join your party", (Object)"\u00a7e/party leave \u00a77- Leave your current party", (Object)"\u00a7e/party accept [player] \u00a77- Accept party invitation", (Object)"\u00a7e/party info [player] \u00a77- View the roster of the party", (Object)"", (Object)"\u00a79Leader Commands:", (Object)"\u00a7e/party kick <player> \u00a77- Kick a player from your party", (Object)"\u00a7e/party leader <player> \u00a77- Transfer party leadership", (Object[])new String[]{"\u00a7e/party disband \u00a77 - Disbands party", "\u00a7e/party lock \u00a77 - Lock party from others joining", "\u00a7e/party open \u00a77 - Open party to others joining", "\u00a7e/party password <password> \u00a77 - Sets party password", "", "\u00a79Other Help:", "\u00a7eTo use \u00a7dparty chat\u00a7e, prefix your message with the \u00a77'\u00a7d@\u00a77' \u00a7esign.", ChatColor.DARK_PURPLE + PotPvPLang.LONG_LINE});
+    private static final List<String> HELP_MESSAGE;
 
-    @Command(names={"party", "p", "t", "team", "f", "party help", "p help", "t help", "team help", "f help"}, permission="")
-    public static void party(Player sender) {
-        HELP_MESSAGE.forEach(arg_0 -> ((Player)sender).sendMessage(arg_0));
+    public PartyHelpCommand() {
+    }
+
+    @Command(
+            names = {"team", "p", "t", "team", "f", "team help", "p help", "t help", "team help", "f help"},
+            permission = ""
+    )
+    public static void team(Player sender) {
+        HELP_MESSAGE.forEach(sender::sendMessage);
+    }
+
+    static {
+        HELP_MESSAGE = ImmutableList.of(ChatColor.DARK_PURPLE + PotPvPLang.LONG_LINE, "§d§lParty Help §7- §fInformation on how to use team commands", ChatColor.DARK_PURPLE + PotPvPLang.LONG_LINE, "§5Team Commands:", "§d/team invite §7- Invite a player to join your team", "§d/team leave §7- Leave your current team", "§d/team accept [player] §7- Accept team invitation", "§d/team info [player] §7- View the roster of the team", "", "§9Leader Commands:", "§d/team kick <player> §7- Kick a player from your team", "§d/team leader <player> §7- Transfer team leadership", new String[]{"§d/team disband §7 - Disbands team", "§d/team lock §7 - Lock team from others joining", "§d/team open §7 - Open team to others joining", "§d/team password <password> §7 - Sets team password", "", "§9Other Help:", "§dTo use §dteam chat§d, prefix your message with the §7'§d@§7' §dsign.", ChatColor.DARK_PURPLE + PotPvPLang.LONG_LINE});
     }
 }
-

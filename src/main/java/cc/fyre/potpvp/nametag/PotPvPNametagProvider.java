@@ -11,8 +11,6 @@ package cc.fyre.potpvp.nametag;
 
 import cc.fyre.potpvp.PotPvP;
 import cc.fyre.potpvp.follow.FollowHandler;
-import cc.fyre.potpvp.game.Game;
-import cc.fyre.potpvp.game.GameState;
 import cc.fyre.potpvp.match.Match;
 import cc.fyre.potpvp.match.MatchHandler;
 import cc.fyre.potpvp.match.MatchTeam;
@@ -81,10 +79,10 @@ extends NametagProvider {
     }
 
     public NametagInfo fetchNametag(Player toRefresh, Player refreshFor) {
-        Game game = PotPvP.getInstance().gameHandler.getOngoingGame();
+        /*Game game = PotPvP.getInstance().gameHandler.getOngoingGame();
         if (game != null && game.getPlayers().contains(toRefresh) && game.getPlayers().contains(refreshFor) && game.getState() != GameState.ENDED) {
             return PotPvPNametagProvider.createNametag((String)game.getEvent().getNameTag(game, toRefresh, refreshFor), (String)"");
-        }
+        }*/
         String nametag = ChatColor.translateAlternateColorCodes((char)'&', (String)PotPvPNametagProvider.getNameColor(toRefresh, refreshFor));
         return PotPvPNametagProvider.createNametag((String)nametag, (String)"");
     }

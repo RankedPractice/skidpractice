@@ -32,7 +32,7 @@ extends Button {
     private final int slot;
 
     KitDeleteButton(KitType kitType, int slot) {
-        this.kitType = (KitType)Preconditions.checkNotNull((Object)kitType, (Object)"kitType");
+        this.kitType = (KitType)Preconditions.checkNotNull(kitType, "kitType");
         this.slot = slot;
     }
 
@@ -41,7 +41,7 @@ extends Button {
     }
 
     public List<String> getDescription(Player player) {
-        return ImmutableList.of((Object)"", (Object)(ChatColor.RED + "Click here to delete this kit"), (Object)(ChatColor.RED + "You will " + ChatColor.BOLD + "NOT" + ChatColor.RED + " be able to"), (Object)(ChatColor.RED + "recover this kit."));
+        return ImmutableList.of("", (ChatColor.RED + "Click here to delete this kit"), (ChatColor.RED + "You will " + ChatColor.BOLD + "NOT" + ChatColor.RED + " be able to"), (ChatColor.RED + "recover this kit."));
     }
 
     public Material getMaterial(Player player) {

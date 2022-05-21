@@ -61,10 +61,10 @@ public final class DuelCommand {
             if (!PotPvPValidation.canSendDuel(senderParty, targetParty, sender)) {
                 return;
             }
-            new SelectKitTypeMenu((Callback<KitType>)((Callback)kitType -> {
+            new SelectKitTypeMenu((kitType -> {
                 sender.closeInventory();
                 if (sender.hasPermission("potpvp.arena.select")) {
-                    new SelectArenaMenu((KitType)kitType, (Callback<ArenaSchematic>)((Callback)schematic -> {
+                    new SelectArenaMenu(kitType, (schematic -> {
                         Party newSenderParty = partyHandler.getParty(sender);
                         Party newTargetParty = partyHandler.getParty(target);
                         if (newSenderParty != null && newTargetParty != null) {
@@ -95,10 +95,10 @@ public final class DuelCommand {
                 sender.sendMessage(ChatColor.RED + target.getName() + " just returned to the lobby, please wait a moment.");
                 return;
             }
-            new SelectKitTypeMenu((Callback<KitType>)((Callback)kitType -> {
+            new SelectKitTypeMenu((kitType -> {
                 sender.closeInventory();
                 if (sender.hasPermission("potpvp.arena.select")) {
-                    new SelectArenaMenu((KitType)kitType, (Callback<ArenaSchematic>)((Callback)schematic -> DuelCommand.duel(sender, target, kitType, schematic, false)), ChatColor.BLUE.toString() + ChatColor.BOLD + "Select an arena...").openMenu(sender);
+                    new SelectArenaMenu((KitType)kitType,(schematic -> DuelCommand.duel(sender, target, kitType, schematic, false)), ChatColor.BLUE.toString() + ChatColor.BOLD + "Select an arena...").openMenu(sender);
                 } else {
                     DuelCommand.duel(sender, target, kitType, null, false);
                 }

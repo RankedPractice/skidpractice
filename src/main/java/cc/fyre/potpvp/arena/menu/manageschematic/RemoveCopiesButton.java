@@ -29,7 +29,7 @@ extends Button {
     private final ArenaSchematic schematic;
 
     RemoveCopiesButton(ArenaSchematic schematic) {
-        this.schematic = (ArenaSchematic)Preconditions.checkNotNull((Object)schematic, (Object)"schematic");
+        this.schematic = (ArenaSchematic)Preconditions.checkNotNull(schematic, "schematic");
     }
 
     public String getName(Player player) {
@@ -37,7 +37,7 @@ extends Button {
     }
 
     public List<String> getDescription(Player player) {
-        return ImmutableList.of((Object)"", (Object)(ChatColor.RED.toString() + ChatColor.BOLD + "CLICK " + ChatColor.RED + "to remove 1 copy"), (Object)(ChatColor.RED.toString() + ChatColor.BOLD + "SHIFT-CLICK " + ChatColor.RED + "to remove 10 copies"), (Object)"", (Object)(ChatColor.AQUA + "Scale directly to a desired quantity"), (Object)(ChatColor.AQUA + "with /arena scale " + this.schematic.getName() + " <count>"));
+        return ImmutableList.of("", (ChatColor.RED.toString() + ChatColor.BOLD + "CLICK " + ChatColor.RED + "to remove 1 copy"), (ChatColor.RED.toString() + ChatColor.BOLD + "SHIFT-CLICK " + ChatColor.RED + "to remove 10 copies"), "", (ChatColor.AQUA + "Scale directly to a desired quantity"), (ChatColor.AQUA + "with /arena scale " + this.schematic.getName() + " <count>"));
     }
 
     public Material getMaterial(Player player) {

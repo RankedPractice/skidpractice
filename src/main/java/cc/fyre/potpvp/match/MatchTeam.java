@@ -31,7 +31,7 @@ public final class MatchTeam {
     private int points = 0;
 
     public MatchTeam(int id, UUID initialMember) {
-        this(id, (Collection<UUID>)ImmutableSet.of((Object)initialMember));
+        this(id, ImmutableSet.of(initialMember));
     }
 
     public MatchTeam(int id, Collection<UUID> initialMembers) {

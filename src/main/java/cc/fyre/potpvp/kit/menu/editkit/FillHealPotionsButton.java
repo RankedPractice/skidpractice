@@ -34,7 +34,7 @@ extends Button {
     }
 
     public List<String> getDescription(Player player) {
-        return ImmutableList.of((Object)"", (Object)(ChatColor.LIGHT_PURPLE + "Fill your empty inventory space"), (Object)(ChatColor.LIGHT_PURPLE + "with Splash Health Potions."));
+        return ImmutableList.of("", (ChatColor.LIGHT_PURPLE + "Fill your empty inventory space"), (ChatColor.LIGHT_PURPLE + "with Splash Health Potions."));
     }
 
     public Material getMaterial(Player player) {

@@ -10,10 +10,6 @@ package cc.fyre.potpvp.util;
 
 import cc.fyre.potpvp.PotPvP;
 import cc.fyre.potpvp.follow.FollowHandler;
-import cc.fyre.potpvp.game.Game;
-import cc.fyre.potpvp.game.GameState;
-import cc.fyre.potpvp.game.util.team.GameTeam;
-import cc.fyre.potpvp.game.util.team.GameTeamEventLogic;
 import cc.fyre.potpvp.lobby.LobbyHandler;
 import cc.fyre.potpvp.match.Match;
 import cc.fyre.potpvp.match.MatchHandler;
@@ -60,7 +56,7 @@ public final class VisibilityUtils {
         PartyHandler partyHandler = PotPvP.getInstance().getPartyHandler();
         MatchHandler matchHandler = PotPvP.getInstance().getMatchHandler();
         Match targetMatch = matchHandler.getMatchPlayingOrSpectating(target);
-        Game game = PotPvP.getInstance().getGameHandler().getOngoingGame();
+        /*Game game = PotPvP.getInstance().getGameHandler().getOngoingGame();
         if (game != null && game.getPlayers().contains(viewer) && game.getPlayers().contains(target)) {
             if (game.getState() == GameState.ENDED) {
                 return true;
@@ -76,7 +72,7 @@ public final class VisibilityUtils {
                 return team == null || !team.hasDied(target);
             }
             return true;
-        }
+        }*/
         if (targetMatch == null) {
             Party targetParty = partyHandler.getParty(target);
             Optional<UUID> following = followHandler.getFollowing(viewer);

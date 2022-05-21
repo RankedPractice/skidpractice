@@ -37,7 +37,7 @@ implements Listener {
     public void onMatchCountdownEnd(MatchStartEvent event) {
         final Match match = event.getMatch();
         new BukkitRunnable(){
-            int secondsRemaining = MatchDurationLimitListener.access$000();
+            int secondsRemaining = MatchDurationLimitListener.DURATION_LIMIT_SECONDS;
 
             public void run() {
                 if (match.getState() != MatchState.IN_PROGRESS) {

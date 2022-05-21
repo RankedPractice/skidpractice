@@ -32,7 +32,7 @@ extends Button {
     }
 
     public List<String> getDescription(Player player) {
-        return ImmutableList.of((Object)(ChatColor.AQUA + "Longest Combo" + ChatColor.GRAY.toString() + " - " + this.longestCombo + " Hit" + (this.longestCombo == 1 ? "" : "s")), (Object)(ChatColor.AQUA + "Total Hits" + ChatColor.GRAY.toString() + " - " + this.totalHits + " Hit" + (this.totalHits == 1 ? "" : "s")));
+        return ImmutableList.of((ChatColor.AQUA + "Longest Combo" + ChatColor.GRAY.toString() + " - " + this.longestCombo + " Hit" + (this.longestCombo == 1 ? "" : "s")), (ChatColor.AQUA + "Total Hits" + ChatColor.GRAY.toString() + " - " + this.totalHits + " Hit" + (this.totalHits == 1 ? "" : "s")));
     }
 
     public Material getMaterial(Player player) {

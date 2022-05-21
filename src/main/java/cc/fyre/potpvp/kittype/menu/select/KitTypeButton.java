@@ -34,12 +34,12 @@ extends Button {
     private final int amount;
 
     KitTypeButton(KitType kitType, Callback<KitType> callback) {
-        this(kitType, callback, (List<String>)ImmutableList.of(), 1);
+        this(kitType, callback, ImmutableList.of(), 1);
     }
 
     KitTypeButton(KitType kitType, Callback<KitType> callback, List<String> descriptionLines, int amount) {
-        this.kitType = (KitType)Preconditions.checkNotNull((Object)kitType, (Object)"kitType");
-        this.callback = (Callback)Preconditions.checkNotNull(callback, (Object)"callback");
+        this.kitType = (KitType)Preconditions.checkNotNull(kitType, "kitType");
+        this.callback = (Callback)Preconditions.checkNotNull(callback, "callback");
         this.descriptionLines = ImmutableList.copyOf(descriptionLines);
         this.amount = amount;
     }
@@ -77,7 +77,7 @@ extends Button {
     }
 
     public void clicked(@NotNull Player player, int slot, @NotNull ClickType clickType) {
-        this.callback.callback((Object)this.kitType);
+        this.callback.callback(this.kitType);
     }
 }
 

@@ -29,7 +29,6 @@ import cc.fyre.potpvp.validation.PotPvPValidation;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
 import java.util.UUID;
-import me.jumper251.replay.replaysystem.replaying.ReplayHelper;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import rip.bridge.qlib.command.Command;
@@ -41,10 +40,6 @@ public final class AcceptCommand {
     public static void accept(Player sender, @Param(name="player") Player target) {
         if (sender == target) {
             sender.sendMessage(ChatColor.RED + "You can't accept a duel from yourself!");
-            return;
-        }
-        if (ReplayHelper.replaySessions.containsKey(sender.getName())) {
-            sender.sendMessage(CC.translate("&cYou can't do this while in a replay."));
             return;
         }
         PartyHandler partyHandler = PotPvP.getInstance().getPartyHandler();
@@ -83,7 +78,7 @@ public final class AcceptCommand {
         if (!PotPvPValidation.canAcceptDuel(senderParty, targetParty, sender)) {
             return;
         }
-        Match match = matchHandler.startMatch((List<MatchTeam>)ImmutableList.of((Object)new MatchTeam(0, senderParty.getMembers()), (Object)new MatchTeam(1, targetParty.getMembers())), invite.getKitType(), invite.getArenaSchematic(), QueueType.UNRANKED, true);
+        Match match = matchHandler.startMatch(ImmutableList.of(new MatchTeam(0, senderParty.getMembers()), new MatchTeam(1, targetParty.getMembers())), invite.getKitType(), invite.getArenaSchematic(), QueueType.UNRANKED, true);
         if (match != null) {
             duelHandler.removeInvite(invite);
             senderParty.message(ChatColor.YELLOW + "Starting duel against " + ChatColor.GREEN + DisguiseUtil.getDisguisedName(targetParty.getLeader()) + "'s Party");
@@ -100,7 +95,7 @@ public final class AcceptCommand {
         if (!PotPvPValidation.canAcceptDuel(sender, target)) {
             return;
         }
-        Match match = matchHandler.startMatch((List<MatchTeam>)ImmutableList.of((Object)new MatchTeam(0, sender.getUniqueId()), (Object)new MatchTeam(1, target.getUniqueId())), invite.getKitType(), invite.getArenaSchematic(), QueueType.UNRANKED, true);
+        Match match = matchHandler.startMatch((List<MatchTeam>)ImmutableList.of(new MatchTeam(0, sender.getUniqueId()), new MatchTeam(1, target.getUniqueId())), invite.getKitType(), invite.getArenaSchematic(), QueueType.UNRANKED, true);
         if (match != null) {
             duelHandler.removeInvite(invite);
             sender.sendMessage(ChatColor.YELLOW + "Starting duel against " + ChatColor.GREEN + DisguiseUtil.getDisguisedName(target.getUniqueId()));

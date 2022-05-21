@@ -33,7 +33,7 @@ extends Button {
     }
 
     public List<String> getDescription(Player player) {
-        return ImmutableList.of((Object)(ChatColor.GRAY + "You are editing '" + this.kit.getName() + "'"));
+        return ImmutableList.of((ChatColor.GRAY + "You are editing '" + this.kit.getName() + "'"));
     }
 
     public Material getMaterial(Player player) {

@@ -33,75 +33,88 @@ implements BiConsumer<Player, TabLayout> {
      * WARNING - void declaration
      */
     @Override
-    public void accept(Player player, TabLayout tabLayout) {
-        Match match = PotPvP.getInstance().getMatchHandler().getMatchPlaying(player);
-        List<MatchTeam> teams = match.getTeams();
+    public void accept(final Player player, final TabLayout tabLayout) {
+        final Match match = PotPvP.getInstance().getMatchHandler().getMatchPlaying(player);
+        final List<MatchTeam> teams = match.getTeams();
         if (teams.size() == 2) {
-            boolean duel;
-            MatchTeam ourTeam = match.getTeam(player.getUniqueId());
-            MatchTeam otherTeam = teams.get(0) == ourTeam ? teams.get(1) : teams.get(0);
-            boolean bl = duel = ourTeam.getAllMembers().size() == 1 && otherTeam.getAllMembers().size() == 1;
+            final MatchTeam ourTeam = match.getTeam(player.getUniqueId());
+            final MatchTeam otherTeam = (teams.get(0) == ourTeam) ? teams.get(1) : teams.get(0);
+            final boolean duel = ourTeam.getAllMembers().size() == 1 && otherTeam.getAllMembers().size() == 1;
             if (!duel) {
                 tabLayout.set(0, 3, ChatColor.GREEN + ChatColor.BOLD.toString() + "Team " + ChatColor.GREEN + "(" + ourTeam.getAliveMembers().size() + "/" + ourTeam.getAllMembers().size() + ")");
-            } else {
+            }
+            else {
                 tabLayout.set(0, 3, ChatColor.GREEN + ChatColor.BOLD.toString() + "You");
             }
             this.renderTeamMemberOverviewEntries(tabLayout, ourTeam, 0, 4, ChatColor.GREEN);
             if (!duel) {
                 tabLayout.set(2, 3, ChatColor.RED + ChatColor.BOLD.toString() + "Enemies " + ChatColor.RED + "(" + otherTeam.getAliveMembers().size() + "/" + otherTeam.getAllMembers().size() + ")");
-            } else {
+            }
+            else {
                 tabLayout.set(2, 3, ChatColor.RED + ChatColor.BOLD.toString() + "Opponent");
             }
             this.renderTeamMemberOverviewEntries(tabLayout, otherTeam, 2, 4, ChatColor.RED);
-        } else {
-            tabLayout.set(1, 3, ChatColor.BLUE + ChatColor.BOLD.toString() + "Party FFA");
+        }
+        else {
+            tabLayout.set(1, 3, ChatColor.RED + ChatColor.BOLD.toString() + "Party FFA");
             int x = 0;
             int y = 4;
-            LinkedHashMap entries = new LinkedHashMap();
-            MatchTeam ourTeam = match.getTeam(player.getUniqueId());
-            LinkedHashMap<String, Integer> aliveLines = new LinkedHashMap<String, Integer>();
-            LinkedHashMap<String, Integer> deadLines = new LinkedHashMap<String, Integer>();
-            for (UUID uUID : ourTeam.getAllMembers()) {
-                if (ourTeam.isAlive(uUID)) {
-                    aliveLines.put(ChatColor.GREEN + FrozenUUIDCache.name((UUID)uUID), PotPvPLayoutProvider.getPingOrDefault(uUID));
-                    continue;
+            final Map<String, Integer> entries = new LinkedHashMap<>();
+            final MatchTeam ourTeam2 = match.getTeam(player.getUniqueId());
+            final Map<String, Integer> aliveLines = new LinkedHashMap<>();
+            final Map<String, Integer> deadLines = new LinkedHashMap<>();
+            for (final UUID teamMember : ourTeam2.getAllMembers()) {
+                if (ourTeam2.isAlive(teamMember)) {
+                    aliveLines.put(ChatColor.GREEN + FrozenUUIDCache.name(teamMember), PotPvPLayoutProvider.getPingOrDefault(teamMember));
                 }
-                deadLines.put("&7&m" + FrozenUUIDCache.name((UUID)uUID), PotPvPLayoutProvider.getPingOrDefault(uUID));
+                else {
+                    deadLines.put("&7&m" + FrozenUUIDCache.name(teamMember), PotPvPLayoutProvider.getPingOrDefault(teamMember));
+                }
             }
             entries.putAll(aliveLines);
             entries.putAll(deadLines);
-            LinkedHashMap<String, Integer> deadLines2 = new LinkedHashMap<String, Integer>();
-            for (MatchTeam otherTeam : match.getTeams()) {
-                if (otherTeam == ourTeam) continue;
-                for (UUID enemy : otherTeam.getAllMembers()) {
-                    if (otherTeam.isAlive(enemy)) {
-                        entries.put(ChatColor.RED + FrozenUUIDCache.name((UUID)enemy), PotPvPLayoutProvider.getPingOrDefault(enemy));
-                        continue;
+            final Map<String, Integer> deadLines2 = new LinkedHashMap<>();
+            for (final MatchTeam otherTeam2 : match.getTeams()) {
+                if (otherTeam2 == ourTeam2) {
+                    continue;
+                }
+                for (final UUID enemy : otherTeam2.getAllMembers()) {
+                    if (otherTeam2.isAlive(enemy)) {
+                        entries.put(ChatColor.RED + FrozenUUIDCache.name(enemy), PotPvPLayoutProvider.getPingOrDefault(enemy));
                     }
-                    deadLines2.put("&7&m" + FrozenUUIDCache.name((UUID)enemy), PotPvPLayoutProvider.getPingOrDefault(enemy));
+                    else {
+                        deadLines2.put("&7&m" + FrozenUUIDCache.name(enemy), PotPvPLayoutProvider.getPingOrDefault(enemy));
+                    }
                 }
             }
             entries.putAll(deadLines2);
-            ArrayList result2 = new ArrayList(entries.entrySet());
-            for (int index = 0; index < result2.size(); ++index) {
-                Map.Entry entry = (Map.Entry)result2.get(index);
-                tabLayout.set(x++, y, (String)entry.getKey(), ((Integer)entry.getValue()).intValue());
+            final List<Map.Entry<String, Integer>> result = new ArrayList<>(entries.entrySet());
+            int index = 0;
+            while (index < result.size()) {
+                final Map.Entry<String, Integer> entry = result.get(index);
+                tabLayout.set(x++, y, entry.getKey(), entry.getValue());
                 if (x == 3 && y == 20) {
-                    void var12_20;
-                    boolean bl = false;
-                    for (int i = index; i < result2.size(); ++i) {
-                        String currentEntry = (String)((Map.Entry)result2.get(i)).getKey();
-                        boolean dead = ChatColor.getLastColors((String)currentEntry).equals(ChatColor.GRAY + ChatColor.STRIKETHROUGH.toString());
-                        if (dead) continue;
-                        ++var12_20;
+                    int aliveLeft = 0;
+                    for (int i = index; i < result.size(); ++i) {
+                        final String currentEntry = result.get(i).getKey();
+                        final boolean dead = ChatColor.getLastColors(currentEntry).equals(ChatColor.GRAY + ChatColor.STRIKETHROUGH.toString());
+                        if (!dead) {
+                            ++aliveLeft;
+                        }
                     }
-                    if (var12_20 == false || var12_20 == true) break;
-                    tabLayout.set(x, y, ChatColor.GREEN + "+" + (int)var12_20);
+                    if (aliveLeft != 0 && aliveLeft != 1) {
+                        tabLayout.set(x, y, ChatColor.GREEN + "+" + aliveLeft);
+                        break;
+                    }
                     break;
                 }
-                if (x != 3) continue;
-                x = 0;
-                ++y;
+                else {
+                    if (x == 3) {
+                        x = 0;
+                        ++y;
+                    }
+                    ++index;
+                }
             }
         }
     }

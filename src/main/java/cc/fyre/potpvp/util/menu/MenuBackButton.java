@@ -27,7 +27,7 @@ extends Button {
     private final Consumer<Player> openPreviousMenuConsumer;
 
     public MenuBackButton(Consumer<Player> openPreviousMenuConsumer) {
-        this.openPreviousMenuConsumer = (Consumer)Preconditions.checkNotNull(openPreviousMenuConsumer, (Object)"openPreviousMenuConsumer");
+        this.openPreviousMenuConsumer = (Consumer)Preconditions.checkNotNull(openPreviousMenuConsumer, "openPreviousMenuConsumer");
     }
 
     public String getName(Player player) {
@@ -35,7 +35,7 @@ extends Button {
     }
 
     public List<String> getDescription(Player player) {
-        return ImmutableList.of((Object)"", (Object)(ChatColor.RED + "Click here to return to"), (Object)(ChatColor.RED + "the previous menu."));
+        return ImmutableList.of("", (ChatColor.RED + "Click here to return to"), (ChatColor.RED + "the previous menu."));
     }
 
     public Material getMaterial(Player player) {

@@ -40,7 +40,7 @@ extends Menu {
 
     public SelectKitTypeMenu(Callback<KitType> callback, boolean reset, String title) {
         this.title = title;
-        this.callback = (Callback)Preconditions.checkNotNull(callback, (Object)"callback");
+        this.callback = (Callback)Preconditions.checkNotNull(callback, "callback");
         this.reset = reset;
     }
 
@@ -63,7 +63,7 @@ extends Menu {
         HashMap<Integer, Button> buttons = new HashMap<Integer, Button>();
         int index = 0;
         for (KitType kitType : KitType.getAllTypes()) {
-            if (!player.isOp() && kitType.isHidden() || this.predicate != null && !this.predicate.apply((Object)kitType)) continue;
+            if (!player.isOp() && kitType.isHidden() || this.predicate != null && !this.predicate.apply(kitType)) continue;
             buttons.put(index++, new KitTypeButton(kitType, this.callback));
         }
         Party party = PotPvP.getInstance().getPartyHandler().getParty(player);

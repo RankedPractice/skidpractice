@@ -47,8 +47,6 @@ import cc.fyre.potpvp.nametag.PotPvPNametagProvider;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import me.jumper251.replay.api.ReplayAPI;
-import me.jumper251.replay.utils.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -280,14 +278,11 @@ implements Listener {
 
     @EventHandler
     public void onMatchStart(MatchStartEvent event) {
-        String id = StringUtils.getRandomString(6);
-        ReplayAPI.getInstance().recordReplay(null, (CommandSender)Bukkit.getConsoleSender(), event.getMatch().getAllPlayers().stream().map(Bukkit::getPlayer).filter(Objects::nonNull).collect(Collectors.toList()));
-        event.getMatch().setReplayId(id);
+
     }
 
     @EventHandler
     public void onMatchEnd(MatchEndEvent event) {
-        ReplayAPI.getInstance().stopReplay(event.getMatch().getReplayId(), true);
     }
 }
 

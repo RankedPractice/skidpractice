@@ -49,7 +49,7 @@ public class KitTypeImportExportCommands {
         if (file.exists()) {
             try (BufferedReader schematicsFileReader = Files.newReader((File)file, (Charset)Charsets.UTF_8);){
                 Type schematicListType = new TypeToken<List<KitType>>(){}.getType();
-                List kitTypes = (List)qLib.PLAIN_GSON.fromJson((Reader)schematicsFileReader, schematicListType);
+                List<KitType> kitTypes = (List)qLib.PLAIN_GSON.fromJson((Reader)schematicsFileReader, schematicListType);
                 for (KitType kitType : kitTypes) {
                     KitType.getAllTypes().removeIf(otherKitType -> otherKitType.id.equals(kitType.id));
                     KitType.getAllTypes().add(kitType);

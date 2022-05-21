@@ -41,7 +41,7 @@ extends Button {
     private final Kit kit;
 
     KitRenameButton(Kit kit) {
-        this.kit = (Kit)Preconditions.checkNotNull((Object)kit, (Object)"kit");
+        this.kit = (Kit)Preconditions.checkNotNull(kit, "kit");
     }
 
     public String getName(Player player) {
@@ -49,7 +49,7 @@ extends Button {
     }
 
     public List<String> getDescription(Player player) {
-        return ImmutableList.of((Object)"", (Object)(ChatColor.YELLOW + "Click to rename this kit."));
+        return ImmutableList.of("", (ChatColor.YELLOW + "Click to rename this kit."));
     }
 
     public Material getMaterial(Player player) {

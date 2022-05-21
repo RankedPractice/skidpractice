@@ -13,11 +13,8 @@ import cc.fyre.potpvp.PotPvP;
 import cc.fyre.potpvp.match.Match;
 import cc.fyre.potpvp.match.MatchTeam;
 import cc.fyre.potpvp.tab.PotPvPLayoutProvider;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+
+import java.util.*;
 import java.util.function.BiConsumer;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -74,7 +71,7 @@ implements BiConsumer<Player, TabLayout> {
             tabLayout.set(1, 3, ChatColor.BLUE + ChatColor.BOLD.toString() + "Party FFA");
             int x = 0;
             int y = 4;
-            Map<Object, Object> entries = new LinkedHashMap();
+            Map<String, Integer> entries = new LinkedHashMap();
             if (oldTeam != null) {
                 entries = this.renderTeamMemberOverviewLines(oldTeam, ChatColor.GREEN);
                 deadLines = new LinkedHashMap();
@@ -102,7 +99,7 @@ implements BiConsumer<Player, TabLayout> {
                 }
                 entries.putAll(deadLines);
             }
-            ArrayList<Map.Entry<Object, Object>> result2 = new ArrayList<Map.Entry<Object, Object>>(entries.entrySet());
+            final List<Map.Entry<String, Integer>> result2 = new ArrayList<>(entries.entrySet());
             for (int index = 0; index < result2.size(); ++index) {
                 Map.Entry entry = (Map.Entry)result2.get(index);
                 tabLayout.set(x++, y, (String)entry.getKey(), ((Integer)entry.getValue()).intValue());
@@ -114,7 +111,7 @@ implements BiConsumer<Player, TabLayout> {
                         if (dead) continue;
                         ++aliveLeft;
                     }
-                    if (aliveLeft == 0 || aliveLeft == true) break;
+                    if (aliveLeft == 0 || aliveLeft == 1) break;
                     tabLayout.set(x, y, ChatColor.GREEN + "+" + aliveLeft);
                     break;
                 }

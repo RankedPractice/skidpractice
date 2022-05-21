@@ -47,7 +47,7 @@ extends Button {
     }
 
     public List<String> getDescription(Player player) {
-        return ImmutableList.of((Object)(ChatColor.YELLOW + "Current: " + ChatColor.WHITE + (this.readFunction.apply(this.target) != false ? "On" : "Off")), (Object)"", (Object)(ChatColor.GREEN.toString() + ChatColor.BOLD + "Click to toggle"));
+        return ImmutableList.of((ChatColor.YELLOW + "Current: " + ChatColor.WHITE + (this.readFunction.apply(this.target) != false ? "On" : "Off")), "", (ChatColor.GREEN.toString() + ChatColor.BOLD + "Click to toggle"));
     }
 
     public Material getMaterial(Player player) {

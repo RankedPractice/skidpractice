@@ -12,11 +12,7 @@ package cc.fyre.potpvp.tab;
 
 import cc.fyre.potpvp.PotPvP;
 import cc.fyre.potpvp.match.Match;
-import cc.fyre.potpvp.tab.HeaderLayoutProvider;
-import cc.fyre.potpvp.tab.LobbyLayoutProvider;
-import cc.fyre.potpvp.tab.MatchParticipantLayoutProvider;
-import cc.fyre.potpvp.tab.MatchSpectatorLayoutProvider;
-import cc.fyre.potpvp.tab.OnlinePlayersLayoutProvider;
+
 import java.util.UUID;
 import java.util.function.BiConsumer;
 import org.bukkit.Bukkit;
@@ -33,7 +29,6 @@ implements LayoutProvider {
     private final BiConsumer<Player, TabLayout> lobbyLayoutProvider = new LobbyLayoutProvider();
     private final BiConsumer<Player, TabLayout> matchSpectatorLayoutProvider = new MatchSpectatorLayoutProvider();
     private final BiConsumer<Player, TabLayout> matchParticipantLayoutProvider = new MatchParticipantLayoutProvider();
-    private final BiConsumer<Player, TabLayout> onlinePlayersLayoutProvider = new OnlinePlayersLayoutProvider();
 
     public TabLayout provide(Player player) {
         TabLayout tabLayout = TabLayout.create((Player)player);
@@ -48,8 +43,8 @@ implements LayoutProvider {
         } else {
             this.lobbyLayoutProvider.accept(player, tabLayout);
         }
-        this.onlinePlayersLayoutProvider.accept(player, tabLayout);
-        this.onlinePlayersLayoutProvider.accept(player, tabLayout);
+        //this.onlinePlayersLayoutProvider.accept(player, tabLayout);
+        //this.onlinePlayersLayoutProvider.accept(player, tabLayout);
         return tabLayout;
     }
 

@@ -164,7 +164,7 @@ public final class PostMatchInvHandler {
     }
 
     public Map<UUID, PostMatchPlayer> getPostMatchData(UUID forWhom) {
-        return this.playerData.getOrDefault(forWhom, (Map<UUID, PostMatchPlayer>)ImmutableMap.of());
+        return this.playerData.getOrDefault(forWhom, ImmutableMap.of());
     }
 
     public void removePostMatchData(UUID forWhom) {

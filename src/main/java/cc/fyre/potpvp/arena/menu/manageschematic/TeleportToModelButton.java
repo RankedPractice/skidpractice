@@ -33,7 +33,7 @@ extends Button {
     private final ArenaSchematic schematic;
 
     TeleportToModelButton(ArenaSchematic schematic) {
-        this.schematic = (ArenaSchematic)Preconditions.checkNotNull((Object)schematic, (Object)"schematic");
+        this.schematic = (ArenaSchematic)Preconditions.checkNotNull(schematic, "schematic");
     }
 
     public String getName(Player player) {
@@ -41,7 +41,7 @@ extends Button {
     }
 
     public List<String> getDescription(Player player) {
-        return ImmutableList.of((Object)"", (Object)(ChatColor.YELLOW + "Click to teleport to the model arena, which"), (Object)(ChatColor.YELLOW + "will allow you to make edits to the schematic."));
+        return ImmutableList.of("", (ChatColor.YELLOW + "Click to teleport to the model arena, which"), (ChatColor.YELLOW + "will allow you to make edits to the schematic."));
     }
 
     public Material getMaterial(Player player) {

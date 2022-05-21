@@ -29,7 +29,7 @@ extends Button {
     }
 
     public List<String> getDescription(Player player) {
-        return ImmutableList.of((Object)(ChatColor.RED + "No items can be changed in this kit."));
+        return ImmutableList.of((ChatColor.RED + "No items can be changed in this kit."));
     }
 
     public Material getMaterial(Player player) {

@@ -70,9 +70,9 @@ public final class LobbyHandler {
     }
 
     public boolean isInLobby(Player player) {
-        if (PotPvP.getInstance().getGameHandler().getOngoingGame() != null && PotPvP.getInstance().getGameHandler().getOngoingGame().getPlayers().contains(player)) {
+        /*if (PotPvP.getInstance().getGameHandler().getOngoingGame() != null && PotPvP.getInstance().getGameHandler().getOngoingGame().getPlayers().contains(player)) {
             return false;
-        }
+        }*/
         return !PotPvP.getInstance().getMatchHandler().isPlayingOrSpectatingMatch(player);
     }
 

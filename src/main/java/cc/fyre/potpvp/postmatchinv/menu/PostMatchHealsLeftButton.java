@@ -42,7 +42,7 @@ extends Button {
     }
 
     public List<String> getDescription(Player player) {
-        return ImmutableList.of((Object)(ChatColor.YELLOW + FrozenUUIDCache.name((UUID)this.player) + " had " + this.healsRemaining + " " + (this.healsRemaining == 1 ? this.healingMethod.getLongSingular() : this.healingMethod.getLongPlural()) + " left."), (Object)(ChatColor.YELLOW + FrozenUUIDCache.name((UUID)this.player) + " missed " + this.missedHeals + " health potion" + (this.missedHeals == 1 ? "." : "s.")));
+        return ImmutableList.of((ChatColor.YELLOW + FrozenUUIDCache.name((UUID)this.player) + " had " + this.healsRemaining + " " + (this.healsRemaining == 1 ? this.healingMethod.getLongSingular() : this.healingMethod.getLongPlural()) + " left."), (ChatColor.YELLOW + FrozenUUIDCache.name((UUID)this.player) + " missed " + this.missedHeals + " health potion" + (this.missedHeals == 1 ? "." : "s.")));
     }
 
     public Material getMaterial(Player player) {

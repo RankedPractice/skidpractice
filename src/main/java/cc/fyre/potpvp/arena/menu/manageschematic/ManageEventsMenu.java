@@ -13,7 +13,6 @@ package cc.fyre.potpvp.arena.menu.manageschematic;
 
 import cc.fyre.potpvp.PotPvP;
 import cc.fyre.potpvp.arena.ArenaSchematic;
-import cc.fyre.potpvp.game.event.GameEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,7 +39,7 @@ extends Menu {
 
     public Map<Integer, Button> getButtons(Player player) {
         HashMap<Integer, Button> buttons = new HashMap<Integer, Button>();
-        for (final GameEvent event : GameEvent.getEvents()) {
+        /*for (final GameEvent event : GameEvent.getEvents()) {
             buttons.put(buttons.size(), new Button(){
 
                 public String getName(Player player) {
@@ -83,7 +82,7 @@ extends Menu {
                     }
                 }
             });
-        }
+        }*/
         return buttons;
     }
 }

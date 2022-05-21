@@ -45,7 +45,7 @@ public final class PartyFfaCommand {
             if (!PotPvPValidation.canStartFfa(party, sender, null)) {
                 return;
             }
-            new SelectKitTypeMenu((Callback<KitType>)((Callback)kitType -> {
+            new SelectKitTypeMenu((Callback<KitType>)(kitType -> {
                 sender.closeInventory();
                 if (!PotPvPValidation.canStartFfa(party, sender, kitType)) {
                     return;
@@ -72,7 +72,7 @@ public final class PartyFfaCommand {
             if (!PotPvPValidation.canStartFfa(party, sender, null)) {
                 return;
             }
-            new SelectKitTypeMenu((Callback<KitType>)((Callback)kitType -> {
+            new SelectKitTypeMenu((Callback<KitType>)(kitType -> {
                 sender.closeInventory();
                 if (!PotPvPValidation.canStartFfa(party, sender, kitType)) {
                     return;

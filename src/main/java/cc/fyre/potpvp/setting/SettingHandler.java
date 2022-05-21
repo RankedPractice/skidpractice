@@ -39,7 +39,7 @@ public final class SettingHandler {
     }
 
     public boolean getSetting(Player player, Setting setting) {
-        Map<Setting, Boolean> playerSettings = this.settingsData.getOrDefault(player.getUniqueId(), (Map<Setting, Boolean>)ImmutableMap.of());
+        Map<Setting, Boolean> playerSettings = this.settingsData.getOrDefault(player.getUniqueId(), ImmutableMap.of());
         return playerSettings.getOrDefault((Object)setting, setting.getDefaultValue());
     }
 

@@ -41,8 +41,6 @@ import org.bson.Document;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
-import rip.bridge.bridge.BridgeGlobal;
-import rip.bridge.bridge.global.profile.Profile;
 import rip.bridge.qlib.hologram.FrozenHologramHandler;
 import rip.bridge.qlib.hologram.construct.Hologram;
 
@@ -85,14 +83,14 @@ public class LeaderboardHandler {
             if (!document.containsKey(field)) continue;
             sortedDocuments.add(document);
         }
-        sortedDocuments.sort(Comparator.comparingInt(o -> o.getInteger(field)).reversed());
+        //sortedDocuments.sort(Comparator.comparingInt(o -> o.getInteger(field)).reversed());
         ArrayList<LeaderboardEntry> leaderboardEntries = new ArrayList<LeaderboardEntry>();
         for (Document document : sortedDocuments) {
             UUID playerId = UUID.fromString(document.getList("players", String.class).get(0));
-            Profile profile = BridgeGlobal.getProfileHandler().getProfileByUUIDOrCreate(playerId);
-            LeaderboardEntry leaderboardEntry = new LeaderboardEntry(leaderboardEntries.size(), UUID.fromString(document.getList("players", String.class).get(0)), profile.getColor() + profile.getUsername(), document.getInteger(field));
+            //Profile profile = BridgeGlobal.getProfileHandler().getProfileByUUIDOrCreate(playerId);
+            /*LeaderboardEntry leaderboardEntry = new LeaderboardEntry(leaderboardEntries.size(), UUID.fromString(document.getList("players", String.class).get(0)), profile.getColor() + profile.getUsername(), document.getInteger(field));
             leaderboardEntries.add(leaderboardEntry);
-            if (leaderboardEntries.size() <= 9) continue;
+            if (leaderboardEntries.size() <= 9) continue;*/
             break;
         }
         return leaderboardEntries;
@@ -128,11 +126,11 @@ public class LeaderboardHandler {
                 updatingHologram.setLine(1, ChatColor.YELLOW + "Loading...");
                 return;
             }
-            for (LeaderboardEntry entry : leaderboard) {
+           /* for (LeaderboardEntry entry : leaderboard) {
                 String positionPart = ChatColor.YELLOW.toString() + (entry.getPosition() + 1) + ". ";
                 String valuePart = ChatColor.YELLOW.toString() + entry.getValue();
                 updatingHologram.setLine(entry.getPosition() + 1, positionPart + ChatColor.RESET + entry.getDisplayName() + " - " + valuePart);
-            }
+            }*/
         }).build();
         this.holograms.add(hologram);
         hologram.send();

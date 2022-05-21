@@ -57,7 +57,7 @@ implements Listener {
 
     public ItemBuilder lore(String name) {
         ItemMeta meta = this.is.getItemMeta();
-        ArrayList<String> lore = meta.getLore();
+        ArrayList<String> lore = (ArrayList<String>) meta.getLore();
         if (lore == null) {
             lore = new ArrayList<String>();
         }

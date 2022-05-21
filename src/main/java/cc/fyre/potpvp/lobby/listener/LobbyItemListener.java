@@ -11,7 +11,6 @@ package cc.fyre.potpvp.lobby.listener;
 
 import cc.fyre.potpvp.PotPvP;
 import cc.fyre.potpvp.follow.command.UnfollowCommand;
-import cc.fyre.potpvp.game.Game;
 import cc.fyre.potpvp.lobby.LobbyHandler;
 import cc.fyre.potpvp.lobby.LobbyItems;
 import cc.fyre.potpvp.lobby.menu.StatisticsMenu;
@@ -52,7 +51,7 @@ extends ItemListener {
             }
         });
         this.addHandler(LobbyItems.EVENTS_ITEM, player -> {
-            Game game = PotPvP.getInstance().gameHandler.getOngoingGame();
+            /*Game game = PotPvP.getInstance().gameHandler.getOngoingGame();
             if (lobbyHandler.isInLobby((Player)player)) {
                 if (game == null) {
                     player.sendMessage(ChatColor.RED + "There are no active events.");
@@ -60,7 +59,7 @@ extends ItemListener {
                 } else {
                     player.performCommand("event join");
                 }
-            }
+            }*/
         });
         this.addHandler(LobbyItems.ENABLE_SPEC_MODE_ITEM, player -> {
             if (lobbyHandler.isInLobby((Player)player) && PotPvPValidation.canUseSpectateItem(player)) {

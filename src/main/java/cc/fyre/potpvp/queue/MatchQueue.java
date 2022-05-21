@@ -34,7 +34,7 @@ public final class MatchQueue {
     private final List<MatchQueueEntry> entries = new CopyOnWriteArrayList<MatchQueueEntry>();
 
     MatchQueue(KitType kitType, QueueType queueType) {
-        this.kitType = (KitType)Preconditions.checkNotNull((Object)kitType, (Object)"kitType");
+        this.kitType = (KitType)Preconditions.checkNotNull(kitType, "kitType");
         this.queueType = queueType;
     }
 
@@ -91,7 +91,7 @@ public final class MatchQueue {
         MatchHandler matchHandler = PotPvP.getInstance().getMatchHandler();
         QueueHandler queueHandler = PotPvP.getInstance().getQueueHandler();
         MatchTeam teamA = new MatchTeam(0, entryA.getMembers());
-        Match match = matchHandler.startMatch((List<MatchTeam>)ImmutableList.of((Object)teamA, (Object)(teamB = new MatchTeam(1, entryB.getMembers()))), this.kitType, null, this.queueType, this.queueType.isUnranked());
+        Match match = matchHandler.startMatch(ImmutableList.of(teamA, (teamB = new MatchTeam(1, entryB.getMembers()))), this.kitType, null, this.queueType, this.queueType.isUnranked());
         if (match != null) {
             EloHandler eloHandler;
             queueHandler.removeFromQueueCache(entryA);

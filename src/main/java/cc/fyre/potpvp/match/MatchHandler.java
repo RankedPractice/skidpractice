@@ -120,9 +120,9 @@ public final class MatchHandler {
         }
         long matchSize = teams.stream().mapToInt(t -> t.getAllMembers().size()).sum();
         ArenaHandler arenaHandler = PotPvP.getInstance().getArenaHandler();
-        Optional<Arena> openArenaOpt = arenaSchematic == null ? arenaHandler.allocateUnusedArena(schematic -> schematic.isEnabled() && schematic.getEvent() == null && !schematic.isTeamFightsOnly() && MatchHandler.canUseSchematic(kitType, schematic) && matchSize <= (long)schematic.getMaxPlayerCount() && matchSize >= (long)schematic.getMinPlayerCount() && (!queueType.isRanked() && !queueType.isPremium() || schematic.isSupportsRanked()) && (kitType.getId().equals("ARCHER") || !schematic.isArcherOnly())) : arenaHandler.allocateUnusedArena(schematic -> schematic.equals(arenaSchematic) && schematic.isEnabled() && schematic.getEvent() == null && !schematic.isTeamFightsOnly() && MatchHandler.canUseSchematic(kitType, schematic) && matchSize <= (long)schematic.getMaxPlayerCount() && matchSize >= (long)schematic.getMinPlayerCount() && (!queueType.isRanked() && !queueType.isPremium() || schematic.isSupportsRanked()) && (kitType.getId().equals("ARCHER") || !schematic.isArcherOnly()));
+        Optional<Arena> openArenaOpt = arenaSchematic == null ? arenaHandler.allocateUnusedArena(schematic -> schematic.isEnabled() /*&& schematic.getEvent() == null*/ && !schematic.isTeamFightsOnly() && MatchHandler.canUseSchematic(kitType, schematic) && matchSize <= (long)schematic.getMaxPlayerCount() && matchSize >= (long)schematic.getMinPlayerCount() && (!queueType.isRanked() && !queueType.isPremium() || schematic.isSupportsRanked()) && (kitType.getId().equals("ARCHER") || !schematic.isArcherOnly())) : arenaHandler.allocateUnusedArena(schematic -> schematic.equals(arenaSchematic) && schematic.isEnabled() /*&& schematic.getEvent() == null*/ && !schematic.isTeamFightsOnly() && MatchHandler.canUseSchematic(kitType, schematic) && matchSize <= (long)schematic.getMaxPlayerCount() && matchSize >= (long)schematic.getMinPlayerCount() && (!queueType.isRanked() && !queueType.isPremium() || schematic.isSupportsRanked()) && (kitType.getId().equals("ARCHER") || !schematic.isArcherOnly()));
         if (kitType.equals(KitType.teamFight)) {
-            openArenaOpt = arenaHandler.allocateUnusedArena(schematic -> schematic.isEnabled() && schematic.getEvent() == null && MatchHandler.canUseSchematic(kitType, schematic) && matchSize <= (long)schematic.getMaxPlayerCount() && matchSize >= (long)schematic.getMinPlayerCount() && schematic.isTeamFightsOnly());
+            openArenaOpt = arenaHandler.allocateUnusedArena(schematic -> schematic.isEnabled() /*&& schematic.getEvent() == null*/ && MatchHandler.canUseSchematic(kitType, schematic) && matchSize <= (long)schematic.getMaxPlayerCount() && matchSize >= (long)schematic.getMinPlayerCount() && schematic.isTeamFightsOnly());
         }
         if (!openArenaOpt.isPresent()) {
             PotPvP.getInstance().getLogger().warning("Failed to start match: No open arenas found");
@@ -136,9 +136,9 @@ public final class MatchHandler {
 
     public static boolean canUseSchematic(KitType kitType, ArenaSchematic schematic) {
         String kitId = kitType.getId();
-        if (schematic.getEvent() != null) {
+        /*if (schematic.getEvent() != null) {
             return false;
-        }
+        }*/
         if (kitId.equals("ARCHER")) {
             return schematic.isArcherOnly();
         }

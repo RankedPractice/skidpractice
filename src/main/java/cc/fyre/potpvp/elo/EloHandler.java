@@ -45,33 +45,33 @@ public final class EloHandler {
     }
 
     public int getElo(Player player, KitType kitType) {
-        return this.getElo((Set<UUID>)ImmutableSet.of((Object)player.getUniqueId()), kitType);
+        return this.getElo((Set<UUID>)ImmutableSet.of(player.getUniqueId()), kitType);
     }
 
     public int getPremiumElo(Player player, KitType kitType) {
-        return this.getPremiumElo((Set<UUID>)ImmutableSet.of((Object)player.getUniqueId()), kitType);
+        return this.getPremiumElo((Set<UUID>)ImmutableSet.of(player.getUniqueId()), kitType);
     }
 
     public void setElo(Player player, KitType kitType, int newElo) {
-        this.setElo((Set<UUID>)ImmutableSet.of((Object)player.getUniqueId()), kitType, newElo);
+        this.setElo((Set<UUID>)ImmutableSet.of(player.getUniqueId()), kitType, newElo);
     }
 
     public void setPremiumElo(Player player, KitType kitType, int newElo) {
-        this.setPremiumElo((Set<UUID>)ImmutableSet.of((Object)player.getUniqueId()), kitType, newElo);
+        this.setPremiumElo((Set<UUID>)ImmutableSet.of(player.getUniqueId()), kitType, newElo);
     }
 
     public int getPremiumElo(Set<UUID> playerUuids, KitType kitType) {
-        Map<KitType, Integer> partyElo = this.premiumEloData.getOrDefault(playerUuids, (Map<KitType, Integer>)ImmutableMap.of());
+        Map<KitType, Integer> partyElo = this.premiumEloData.getOrDefault(playerUuids, ImmutableMap.of());
         return partyElo.getOrDefault(kitType, 1000);
     }
 
     public int getElo(Set<UUID> playerUuids, KitType kitType) {
-        Map<KitType, Integer> partyElo = this.eloData.getOrDefault(playerUuids, (Map<KitType, Integer>)ImmutableMap.of());
+        Map<KitType, Integer> partyElo = this.eloData.getOrDefault(playerUuids, ImmutableMap.of());
         return partyElo.getOrDefault(kitType, 1000);
     }
 
     public int getGlobalElo(UUID uuid) {
-        Map<KitType, Integer> eloValues = this.eloData.getOrDefault(ImmutableSet.of((Object)uuid), (Map<KitType, Integer>)ImmutableMap.of());
+        Map<KitType, Integer> eloValues = this.eloData.getOrDefault(ImmutableSet.of(uuid), ImmutableMap.of());
         if (eloValues.isEmpty()) {
             return 1000;
         }
@@ -84,7 +84,7 @@ public final class EloHandler {
     }
 
     public int getGlobalPremiumElo(UUID uuid) {
-        Map<KitType, Integer> eloValues = this.premiumEloData.getOrDefault(ImmutableSet.of((Object)uuid), (Map<KitType, Integer>)ImmutableMap.of());
+        Map<KitType, Integer> eloValues = this.premiumEloData.getOrDefault(ImmutableSet.of(uuid), ImmutableMap.of());
         if (eloValues.isEmpty()) {
             return 1000;
         }
@@ -157,7 +157,7 @@ public final class EloHandler {
     public Map<String, Integer> topPremiumElo(KitType type2) {
         ImmutableMap topElo;
         try {
-            topElo = this.eloRepository.topPremiumElo(type2);
+            topElo = (ImmutableMap) this.eloRepository.topPremiumElo(type2);
         }
         catch (IOException ex) {
             ex.printStackTrace();
@@ -169,7 +169,7 @@ public final class EloHandler {
     public Map<String, Integer> topElo(KitType type2) {
         ImmutableMap topElo;
         try {
-            topElo = this.eloRepository.topElo(type2);
+            topElo = (ImmutableMap) this.eloRepository.topElo(type2);
         }
         catch (IOException ex) {
             ex.printStackTrace();
@@ -181,10 +181,10 @@ public final class EloHandler {
     public void resetElo(UUID player) {
         Bukkit.getLogger().info("Resetting elo of " + UUIDUtils.name((UUID)player) + ".");
         Bukkit.getScheduler().runTaskAsynchronously((Plugin)PotPvP.getInstance(), () -> {
-            this.unloadElo((Set<UUID>)ImmutableSet.of((Object)player));
+            this.unloadElo((Set<UUID>)ImmutableSet.of(player));
             try {
-                this.eloRepository.saveElo((Set<UUID>)ImmutableSet.of((Object)player), (Map<KitType, Integer>)ImmutableMap.of());
-                this.eloRepository.savePremiumElo((Set<UUID>)ImmutableSet.of((Object)player), (Map<KitType, Integer>)ImmutableMap.of());
+                this.eloRepository.saveElo((Set<UUID>)ImmutableSet.of(player), ImmutableMap.of());
+                this.eloRepository.savePremiumElo((Set<UUID>)ImmutableSet.of(player), ImmutableMap.of());
             }
             catch (IOException e) {
                 e.printStackTrace();

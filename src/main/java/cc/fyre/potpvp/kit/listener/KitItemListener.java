@@ -25,7 +25,7 @@ extends ItemListener {
         this.addHandler(KitItems.OPEN_EDITOR_ITEM, player -> {
             LobbyHandler lobbyHandler = PotPvP.getInstance().getLobbyHandler();
             if (lobbyHandler.isInLobby((Player)player)) {
-                new SelectKitTypeMenu((Callback<KitType>)((Callback)kitType -> new KitsMenu((KitType)kitType).openMenu((Player)player)), "Select a kit to edit...").predicate((Predicate<KitType>)((Predicate)KitType::isEditorSpawnAllowed)).openMenu((Player)player);
+                new SelectKitTypeMenu((Callback<KitType>)(kitType -> new KitsMenu((KitType)kitType).openMenu((Player)player)), "Select a kit to edit...").predicate((Predicate<KitType>)(KitType::isEditorSpawnAllowed)).openMenu((Player)player);
             }
         });
     }

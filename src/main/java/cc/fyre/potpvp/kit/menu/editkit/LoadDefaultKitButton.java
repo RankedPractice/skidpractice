@@ -36,7 +36,7 @@ extends Button {
     private final KitType kitType;
 
     LoadDefaultKitButton(KitType kitType) {
-        this.kitType = (KitType)Preconditions.checkNotNull((Object)kitType, (Object)"kitType");
+        this.kitType = (KitType)Preconditions.checkNotNull(kitType, "kitType");
     }
 
     public String getName(Player player) {
@@ -44,7 +44,7 @@ extends Button {
     }
 
     public List<String> getDescription(Player player) {
-        return ImmutableList.of((Object)"", (Object)(ChatColor.YELLOW + "Click this to load the default kit"), (Object)(ChatColor.YELLOW + "into the kit editing menu."));
+        return ImmutableList.of("", (ChatColor.YELLOW + "Click this to load the default kit"), (ChatColor.YELLOW + "into the kit editing menu."));
     }
 
     public Material getMaterial(Player player) {

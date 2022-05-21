@@ -10,7 +10,6 @@ package cc.fyre.potpvp.arena;
 import cc.fyre.potpvp.arena.ArenaGrid;
 import cc.fyre.potpvp.arena.ArenaHandler;
 import cc.fyre.potpvp.arena.WorldEditUtils;
-import cc.fyre.potpvp.game.event.GameEvent;
 import com.google.common.base.Preconditions;
 import com.sk89q.worldedit.Vector;
 import java.io.File;
@@ -60,7 +59,7 @@ public final class ArenaSchematic {
         WorldEditUtils.clear(start, start.add(size));
     }
 
-    public GameEvent getEvent() {
+    /*public GameEvent getEvent() {
         if (this.eventName != null) {
             for (GameEvent event : GameEvent.getEvents()) {
                 if (!event.getName().equalsIgnoreCase(this.eventName)) continue;
@@ -69,7 +68,7 @@ public final class ArenaSchematic {
             this.eventName = null;
         }
         return null;
-    }
+    }*/
 
     public boolean equals(Object o) {
         return o instanceof ArenaSchematic && ((ArenaSchematic)o).name.equals(this.name);

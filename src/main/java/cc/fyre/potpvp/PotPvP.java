@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.152.
- * 
+ *
  * Could not load the following classes:
  *  com.google.gson.Gson
  *  com.google.gson.GsonBuilder
@@ -39,12 +39,6 @@ import cc.fyre.potpvp.arena.ArenaHandler;
 import cc.fyre.potpvp.duel.DuelHandler;
 import cc.fyre.potpvp.elo.EloHandler;
 import cc.fyre.potpvp.follow.FollowHandler;
-import cc.fyre.potpvp.game.GameHandler;
-import cc.fyre.potpvp.game.GameListeners;
-import cc.fyre.potpvp.game.event.GameEventListeners;
-import cc.fyre.potpvp.game.event.GameEventTask;
-import cc.fyre.potpvp.game.event.impl.brackets.BracketsGameEventListeners;
-import cc.fyre.potpvp.game.event.impl.sumo.SumoGameEventListeners;
 import cc.fyre.potpvp.killeffects.KillEffectHandler;
 import cc.fyre.potpvp.kit.KitHandler;
 import cc.fyre.potpvp.kittype.KitType;
@@ -84,7 +78,7 @@ import com.google.gson.stream.JsonWriter;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import java.io.IOException;
-import me.jumper251.replay.ReplaySystem;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -111,8 +105,7 @@ import rip.bridge.qlib.serialization.VectorAdapter;
 import rip.bridge.qlib.tab.FrozenTabHandler;
 import rip.bridge.qlib.tab.LayoutProvider;
 
-public final class PotPvP
-extends JavaPlugin {
+public final class PotPvP extends JavaPlugin {
     private static PotPvP instance;
     public static Gson gson;
     private MongoClient mongoClient;
@@ -133,7 +126,6 @@ extends JavaPlugin {
     private TournamentHandler tournamentHandler;
     private PvPClassHandler pvpClassHandler;
     private ProfileManager profileManager;
-    public GameHandler gameHandler;
     private LeaderboardHandler leaderboardHandler;
     private PremiumMatchesHandler premiumMatchesHandler;
     private ChatColor dominantColor = ChatColor.AQUA;
@@ -163,9 +155,7 @@ extends JavaPlugin {
         this.tournamentHandler = new TournamentHandler();
         this.pvpClassHandler = new PvPClassHandler();
         this.killEffectHandler = new KillEffectHandler();
-        this.gameHandler = new GameHandler(this.mongoDatabase.getCollection("eventMetadata"));
         this.premiumMatchesHandler = new PremiumMatchesHandler();
-        new GameEventTask().runTaskTimerAsynchronously((Plugin)this, 4L, 4L);
         this.getServer().getPluginManager().registerEvents((Listener)new BasicPreventionListener(), (Plugin)this);
         this.getServer().getPluginManager().registerEvents((Listener)new BowHealthListener(), (Plugin)this);
         this.getServer().getPluginManager().registerEvents((Listener)new ChatFormatListener(), (Plugin)this);
@@ -177,17 +167,12 @@ extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents((Listener)new TabCompleteListener(), (Plugin)this);
         this.getServer().getPluginManager().registerEvents((Listener)new TabFixListener(), (Plugin)this);
         this.getServer().getPluginManager().registerEvents((Listener)new ToggleVisibilityListener(), (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new GameListeners(), (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new GameEventListeners(), (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new BracketsGameEventListeners(), (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new SumoGameEventListeners(), (Plugin)this);
         FrozenCommandHandler.registerAll((Plugin)this);
         FrozenCommandHandler.registerParameterType(KitType.class, (ParameterType)new KitTypeParameterType());
         this.registerPersistence();
         FrozenNametagHandler.registerProvider((NametagProvider)new PotPvPNametagProvider());
         FrozenScoreboardHandler.setConfiguration((ScoreboardConfiguration)PotPvPScoreboardConfiguration.create());
         FrozenTabHandler.setLayoutProvider((LayoutProvider)new PotPvPLayoutProvider());
-        ReplaySystem.enable();
     }
 
     public void onDisable() {
@@ -204,7 +189,6 @@ extends JavaPlugin {
         for (String playerName : PvPClassHandler.getEquippedKits().keySet()) {
             PvPClassHandler.getEquippedKits().get(playerName).remove(this.getServer().getPlayerExact(playerName));
         }
-        ReplaySystem.disable();
         instance = null;
     }
 
@@ -289,10 +273,6 @@ extends JavaPlugin {
         return this.profileManager;
     }
 
-    public GameHandler getGameHandler() {
-        return this.gameHandler;
-    }
-
     public LeaderboardHandler getLeaderboardHandler() {
         return this.leaderboardHandler;
     }
@@ -310,7 +290,7 @@ extends JavaPlugin {
     }
 
     private static class ChunkSnapshotAdapter
-    extends TypeAdapter<ChunkSnapshot> {
+            extends TypeAdapter<ChunkSnapshot> {
         private ChunkSnapshotAdapter() {
         }
 

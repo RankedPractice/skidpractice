@@ -36,8 +36,8 @@ public final class EloConvertCommand {
                 sender.sendMessage(ChatColor.GREEN + "Converting: " + i + "/" + offlinePlayers.length);
             }
             try {
-                Map<KitType, Integer> map = repository.loadElo((Set<UUID>)ImmutableSet.of((Object)target.getUniqueId()));
-                repository.saveElo((Set<UUID>)ImmutableSet.of((Object)target.getUniqueId()), map);
+                Map<KitType, Integer> map = repository.loadElo((Set<UUID>)ImmutableSet.of(target.getUniqueId()));
+                repository.saveElo((Set<UUID>)ImmutableSet.of(target.getUniqueId()), map);
                 continue;
             }
             catch (IOException e) {

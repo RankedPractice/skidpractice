@@ -42,7 +42,7 @@ extends Button {
         if (!this.effects.isEmpty()) {
             return this.effects.stream().map(effect -> ChatColor.AQUA + this.formatEffectType(effect.getType()) + " " + (effect.getAmplifier() + 1) + ChatColor.GRAY + " - " + TimeUtils.formatIntoMMSS((int)(effect.getDuration() / 20))).collect(Collectors.toList());
         }
-        return ImmutableList.of((Object)"", (Object)(ChatColor.GRAY + "No potion effects."));
+        return ImmutableList.of("", (ChatColor.GRAY + "No potion effects."));
     }
 
     public Material getMaterial(Player player) {

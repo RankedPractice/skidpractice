@@ -11,8 +11,6 @@ package cc.fyre.potpvp.match.command;
 import cc.fyre.potpvp.PotPvP;
 import cc.fyre.potpvp.match.Match;
 import cc.fyre.potpvp.match.MatchHandler;
-import me.jumper251.replay.replaysystem.replaying.ReplayHelper;
-import me.jumper251.replay.replaysystem.replaying.Replayer;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import rip.bridge.qlib.command.Command;
@@ -32,11 +30,6 @@ public final class LeaveCommand {
         } else {
             spectating.removeSpectator(sender);
         }
-        Replayer replay = ReplayHelper.replaySessions.get(sender.getName());
-        if (replay == null) {
-            return;
-        }
-        replay.stop();
     }
 }
 

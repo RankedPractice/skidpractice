@@ -32,7 +32,7 @@ extends Button {
 
     OddManOutButton(boolean oddManOut, Callback<Boolean> callback) {
         this.oddManOut = oddManOut;
-        this.callback = (Callback)Preconditions.checkNotNull(callback, (Object)"callback");
+        this.callback = (Callback)Preconditions.checkNotNull(callback, "callback");
     }
 
     public String getName(Player player) {
@@ -55,7 +55,7 @@ extends Button {
     }
 
     public void clicked(Player player, int slot, ClickType clickType) {
-        this.callback.callback((Object)this.oddManOut);
+        this.callback.callback(this.oddManOut);
     }
 }
 

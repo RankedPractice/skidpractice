@@ -87,22 +87,29 @@ implements Listener {
 
     public static void setRestoreEffect(Player player, PotionEffect effect) {
         boolean shouldCancel = true;
-        Collection activeList = player.getActivePotionEffects();
+        Collection<PotionEffect> activeList = player.getActivePotionEffects();
         for (PotionEffect active : activeList) {
-            if (!active.getType().equals((Object)effect.getType())) continue;
+            if (!active.getType().equals(effect.getType())) continue;
+
+            // If the current potion effect has a higher amplifier, ignore this one.
             if (effect.getAmplifier() < active.getAmplifier()) {
                 return;
+            } else if (effect.getAmplifier() == active.getAmplifier()) {
+                // If the current potion effect has a longer duration, ignore this one.
+                if (0 < active.getDuration() && (effect.getDuration() <= active.getDuration() || effect.getDuration() - active.getDuration() < 10)) {
+                    return;
+                }
             }
-            if (effect.getAmplifier() == active.getAmplifier() && 0 < active.getDuration() && (effect.getDuration() <= active.getDuration() || effect.getDuration() - active.getDuration() < 10)) {
-                return;
-            }
-            restores.put((Object)player.getUniqueId(), (Object)active.getType(), (Object)active);
+
+            restores.put(player.getUniqueId(), active.getType(), active);
             shouldCancel = false;
             break;
         }
+
+        // Cancel the previous restore.
         player.addPotionEffect(effect, true);
         if (shouldCancel && effect.getDuration() > 120 && effect.getDuration() < 9600) {
-            restores.remove((Object)player.getUniqueId(), (Object)effect.getType());
+            restores.remove(player.getUniqueId(), effect.getType());
         }
     }
 
@@ -111,7 +118,7 @@ implements Listener {
         Player player;
         PotionEffect previous;
         LivingEntity livingEntity = event.getEntity();
-        if (livingEntity instanceof Player && (previous = (PotionEffect)restores.remove((Object)(player = (Player)livingEntity).getUniqueId(), (Object)event.getEffect().getType())) != null && previous.getDuration() < 1000000) {
+        if (livingEntity instanceof Player && (previous = (PotionEffect)restores.remove((player = (Player)livingEntity).getUniqueId(), event.getEffect().getType())) != null && previous.getDuration() < 1000000) {
             event.setCancelled(true);
             player.addPotionEffect(previous, true);
             Bukkit.getLogger().info("Restored " + previous.getType().toString() + " for " + player.getName() + ". duration: " + previous.getDuration() + ". amp: " + previous.getAmplifier());

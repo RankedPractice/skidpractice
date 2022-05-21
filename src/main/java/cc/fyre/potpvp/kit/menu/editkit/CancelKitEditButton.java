@@ -31,7 +31,7 @@ extends Button {
     private final KitType kitType;
 
     CancelKitEditButton(KitType kitType) {
-        this.kitType = (KitType)Preconditions.checkNotNull((Object)kitType, (Object)"kitType");
+        this.kitType = (KitType)Preconditions.checkNotNull(kitType, "kitType");
     }
 
     public String getName(Player player) {
@@ -39,7 +39,7 @@ extends Button {
     }
 
     public List<String> getDescription(Player player) {
-        return ImmutableList.of((Object)"", (Object)(ChatColor.YELLOW + "Click this to abort editing your kit,"), (Object)(ChatColor.YELLOW + "and return to the kit menu."));
+        return ImmutableList.of("", (ChatColor.YELLOW + "Click this to abort editing your kit,"), (ChatColor.YELLOW + "and return to the kit menu."));
     }
 
     public Material getMaterial(Player player) {

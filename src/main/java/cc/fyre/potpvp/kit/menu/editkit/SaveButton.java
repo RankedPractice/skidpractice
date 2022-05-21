@@ -35,7 +35,7 @@ extends Button {
     private final Kit kit;
 
     SaveButton(Kit kit) {
-        this.kit = (Kit)Preconditions.checkNotNull((Object)kit, (Object)"kit");
+        this.kit = (Kit)Preconditions.checkNotNull(kit, "kit");
     }
 
     public String getName(Player player) {
@@ -43,7 +43,7 @@ extends Button {
     }
 
     public List<String> getDescription(Player player) {
-        return ImmutableList.of((Object)"", (Object)(ChatColor.YELLOW + "Click this to save your kit."));
+        return ImmutableList.of("", (ChatColor.YELLOW + "Click this to save your kit."));
     }
 
     public Material getMaterial(Player player) {

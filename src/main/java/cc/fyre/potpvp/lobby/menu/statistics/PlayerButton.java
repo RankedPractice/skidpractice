@@ -21,8 +21,6 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import rip.bridge.bridge.BridgeGlobal;
-import rip.bridge.bridge.global.profile.Profile;
 import rip.bridge.qlib.menu.Button;
 
 public class PlayerButton
@@ -55,10 +53,6 @@ extends Button {
     }
 
     private String getColoredName(Player player) {
-        Profile profile = BridgeGlobal.getProfileHandler().getProfileByUUID(player.getUniqueId());
-        if (profile != null) {
-            return profile.getCurrentGrant().getRank().getColor() + player.getName();
-        }
         return player.getName();
     }
 }

@@ -31,6 +31,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import mkremins.fanciful.FancyMessage;
 import org.bukkit.Bukkit;
@@ -166,24 +167,27 @@ implements Listener {
         instance.getTournament().addParty(senderParty);
     }
 
-    @Command(names={"tournament status", "tstatus", "status"}, permission="")
+    @Command(names = { "tournament status", "tstatus", "status" }, permission = "")
     public static void tournamentStatus(CommandSender sender) {
         if (instance.getTournament() == null) {
             sender.sendMessage(ChatColor.RED + "There is no ongoing tournament to get the status of.");
             return;
         }
+
         sender.sendMessage(PotPvPLang.LONG_LINE);
-        sender.sendMessage(ChatColor.translateAlternateColorCodes((char)'&', (String)"&7Live &6Tournament &7Fights"));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7Live &5Tournament &7Fights"));
         sender.sendMessage("");
-        List ongoingMatches = instance.getTournament().getMatches().stream().filter(m -> m.getState() != MatchState.TERMINATED).collect(Collectors.toList());
+        List<Match> ongoingMatches = instance.getTournament().getMatches().stream().filter(m -> m.getState() != MatchState.TERMINATED).collect(Collectors.toList());
+
         for (Match match : ongoingMatches) {
             MatchTeam firstTeam = match.getTeams().get(0);
             MatchTeam secondTeam = match.getTeams().get(1);
+
             if (firstTeam.getAllMembers().size() == 1) {
-                sender.sendMessage("  " + ChatColor.GRAY + "\u00bb " + ChatColor.LIGHT_PURPLE + FrozenUUIDCache.name((UUID)firstTeam.getFirstMember()) + ChatColor.GRAY + " vs " + ChatColor.LIGHT_PURPLE + FrozenUUIDCache.name((UUID)secondTeam.getFirstMember()));
-                continue;
+                sender.sendMessage("  " + ChatColor.GRAY + "» " + ChatColor.LIGHT_PURPLE + FrozenUUIDCache.name(firstTeam.getFirstMember()) + ChatColor.GRAY + " vs " + ChatColor.LIGHT_PURPLE + FrozenUUIDCache.name(secondTeam.getFirstMember()));
+            } else {
+                sender.sendMessage("  " + ChatColor.GRAY + "» " + ChatColor.LIGHT_PURPLE + FrozenUUIDCache.name(firstTeam.getFirstMember()) + ChatColor.GRAY + "'s team vs " + ChatColor.LIGHT_PURPLE + FrozenUUIDCache.name(secondTeam.getFirstMember()) + ChatColor.GRAY + "'s team");
             }
-            sender.sendMessage("  " + ChatColor.GRAY + "\u00bb " + ChatColor.LIGHT_PURPLE + FrozenUUIDCache.name((UUID)firstTeam.getFirstMember()) + ChatColor.GRAY + "'s team vs " + ChatColor.LIGHT_PURPLE + FrozenUUIDCache.name((UUID)secondTeam.getFirstMember()) + ChatColor.GRAY + "'s team");
         }
         sender.sendMessage(PotPvPLang.LONG_LINE);
     }
@@ -216,15 +220,15 @@ implements Listener {
 
     private void populateTournamentStatuses() {
         List<KitType> viewableKits = KitType.getAllTypes().stream().filter(kit -> !kit.isHidden()).collect(Collectors.toList());
-        allStatuses.add(new TournamentStatus(0, (List<Integer>)ImmutableList.of((Object)1), (List<Integer>)ImmutableList.of((Object)16, (Object)32), viewableKits));
-        allStatuses.add(new TournamentStatus(250, (List<Integer>)ImmutableList.of((Object)1), (List<Integer>)ImmutableList.of((Object)32), viewableKits));
+        allStatuses.add(new TournamentStatus(0, ImmutableList.of(1), ImmutableList.of(16, 32), viewableKits));
+        allStatuses.add(new TournamentStatus(250, ImmutableList.of(1), ImmutableList.of(32), viewableKits));
         if (KitType.byId("NODEBUFF") != null) {
-            allStatuses.add(new TournamentStatus(300, (List<Integer>)ImmutableList.of((Object)1), (List<Integer>)ImmutableList.of((Object)48, (Object)64), (List<KitType>)ImmutableList.of((Object)KitType.byId("NODEBUFF"))));
-            allStatuses.add(new TournamentStatus(400, (List<Integer>)ImmutableList.of((Object)1), (List<Integer>)ImmutableList.of((Object)64), (List<KitType>)ImmutableList.of((Object)KitType.byId("NODEBUFF"))));
-            allStatuses.add(new TournamentStatus(500, (List<Integer>)ImmutableList.of((Object)1), (List<Integer>)ImmutableList.of((Object)128), (List<KitType>)ImmutableList.of((Object)KitType.byId("NODEBUFF"))));
-            allStatuses.add(new TournamentStatus(600, (List<Integer>)ImmutableList.of((Object)1), (List<Integer>)ImmutableList.of((Object)128), (List<KitType>)ImmutableList.of((Object)KitType.byId("NODEBUFF"))));
-            allStatuses.add(new TournamentStatus(700, (List<Integer>)ImmutableList.of((Object)1), (List<Integer>)ImmutableList.of((Object)128), (List<KitType>)ImmutableList.of((Object)KitType.byId("NODEBUFF"))));
-            allStatuses.add(new TournamentStatus(800, (List<Integer>)ImmutableList.of((Object)1), (List<Integer>)ImmutableList.of((Object)128), (List<KitType>)ImmutableList.of((Object)KitType.byId("NODEBUFF"))));
+            allStatuses.add(new TournamentStatus(300, ImmutableList.of(1), ImmutableList.of(48, 64), (List<KitType>)ImmutableList.of(KitType.byId("NODEBUFF"))));
+            allStatuses.add(new TournamentStatus(400, ImmutableList.of(1), ImmutableList.of(64), (List<KitType>)ImmutableList.of(KitType.byId("NODEBUFF"))));
+            allStatuses.add(new TournamentStatus(500, ImmutableList.of(1), ImmutableList.of(128), (List<KitType>)ImmutableList.of(KitType.byId("NODEBUFF"))));
+            allStatuses.add(new TournamentStatus(600, ImmutableList.of(1), ImmutableList.of(128), (List<KitType>)ImmutableList.of(KitType.byId("NODEBUFF"))));
+            allStatuses.add(new TournamentStatus(700, ImmutableList.of(1), ImmutableList.of(128), (List<KitType>)ImmutableList.of(KitType.byId("NODEBUFF"))));
+            allStatuses.add(new TournamentStatus(800, ImmutableList.of(1), ImmutableList.of(128), (List<KitType>)ImmutableList.of(KitType.byId("NODEBUFF"))));
         }
     }
 

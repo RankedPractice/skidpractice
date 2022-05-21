@@ -57,9 +57,9 @@ public final class Arena {
     }
 
     public Arena(String schematic, int copy2, Cuboid bounds) {
-        this.schematic = (String)Preconditions.checkNotNull((Object)schematic);
+        this.schematic = (String)Preconditions.checkNotNull(schematic);
         this.copy = copy2;
-        this.bounds = (Cuboid)Preconditions.checkNotNull((Object)bounds);
+        this.bounds = (Cuboid)Preconditions.checkNotNull(bounds);
         this.scanLocations();
     }
 
@@ -83,7 +83,7 @@ public final class Arena {
 
     private void scanLocations() {
         int[] i = new int[]{0};
-        this.forEachBlock((Callback<Block>)((Callback)block -> {
+        this.forEachBlock(block -> {
             Material type2 = block.getType();
             if (type2 == Material.WOOL) {
                 Block below;
@@ -148,9 +148,9 @@ public final class Arena {
                     this.eventSpawns.add(skullLocation);
                 }
             }
-        }));
-        Preconditions.checkNotNull((Object)this.team1Spawn, (Object)"Team 1 spawn (player skull) cannot be null.");
-        Preconditions.checkNotNull((Object)this.team2Spawn, (Object)"Team 2 spawn (player skull) cannot be null.");
+        });
+        Preconditions.checkNotNull(this.team1Spawn, "Team 1 spawn (player skull) cannot be null.");
+        Preconditions.checkNotNull(this.team2Spawn, "Team 2 spawn (player skull) cannot be null.");
     }
 
     private void forEachBlock(Callback<Block> callback) {
@@ -160,7 +160,7 @@ public final class Arena {
         for (int x = start.getBlockX(); x < end.getBlockX(); ++x) {
             for (int y = start.getBlockY(); y < end.getBlockY(); ++y) {
                 for (int z = start.getBlockZ(); z < end.getBlockZ(); ++z) {
-                    callback.callback((Object)world.getBlockAt(x, y, z));
+                    callback.callback(world.getBlockAt(x, y, z));
                 }
             }
         }
@@ -172,7 +172,7 @@ public final class Arena {
     public void takeSnapshot() {
         Map<Long, ChunkSnapshot> map = this.chunkSnapshots;
         synchronized (map) {
-            this.forEachChunk((Callback<Chunk>)((Callback)chunk -> this.chunkSnapshots.put(LongHash.toLong((int)chunk.getX(), (int)chunk.getZ()), chunk.takeSnapshot())));
+            this.forEachChunk(chunk -> this.chunkSnapshots.put(LongHash.toLong((int)chunk.getX(), (int)chunk.getZ()), chunk.takeSnapshot()));
         }
     }
 
@@ -195,7 +195,7 @@ public final class Arena {
         World world = this.bounds.getWorld();
         for (int x = lowerX; x <= upperX; ++x) {
             for (int z = lowerZ; z <= upperZ; ++z) {
-                callback.callback((Object)world.getChunkAt(x, z));
+                callback.callback(world.getChunkAt(x, z));
             }
         }
     }

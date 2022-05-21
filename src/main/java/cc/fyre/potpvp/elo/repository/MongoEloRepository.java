@@ -16,6 +16,7 @@
 package cc.fyre.potpvp.elo.repository;
 
 import cc.fyre.potpvp.PotPvP;
+import cc.fyre.potpvp.elo.EloHandler;
 import cc.fyre.potpvp.elo.repository.EloRepository;
 import cc.fyre.potpvp.kittype.KitType;
 import cc.fyre.potpvp.util.MongoUtils;
@@ -123,9 +124,9 @@ implements EloRepository {
             wrapper[0] = wrapper[0] + 1;
             wrapper[1] = wrapper[1] + elo.getOrDefault(kitType, 1000);
         });
-        document.put("GLOBAL", (Object)(wrapper[1] / wrapper[0]));
+        document.put("GLOBAL", (wrapper[1] / wrapper[0]));
         if (playerUuids.size() == 1) {
-            document.put("lastUsername", (Object)UUIDUtils.name((UUID)playerUuids.iterator().next()));
+            document.put("lastUsername", UUIDUtils.name((UUID)playerUuids.iterator().next()));
         }
         try {
             MongoUtils.getCollection(MONGO_COLLECTION_PREMIUM_NAME).updateOne(new Document("players", playerUuids.stream().map(UUID::toString).collect(Collectors.toSet())), (Bson)new Document("$set", document), MongoUtils.UPSERT_OPTIONS);
@@ -145,9 +146,9 @@ implements EloRepository {
             wrapper[0] = wrapper[0] + 1;
             wrapper[1] = wrapper[1] + elo.getOrDefault(kitType, 1000);
         });
-        document.put("GLOBAL", (Object)(wrapper[1] / wrapper[0]));
+        document.put("GLOBAL", (wrapper[1] / wrapper[0]));
         if (playerUuids.size() == 1) {
-            document.put("lastUsername", (Object)FrozenUUIDCache.name((UUID)playerUuids.iterator().next()));
+            document.put("lastUsername", FrozenUUIDCache.name((UUID)playerUuids.iterator().next()));
         }
         try {
             MongoUtils.getCollection(MONGO_COLLECTION_NAME).updateOne(new Document("players", playerUuids.stream().map(UUID::toString).collect(Collectors.toSet())), (Bson)new Document("$set", document), MongoUtils.UPSERT_OPTIONS);
@@ -159,13 +160,13 @@ implements EloRepository {
 
     @Command(names={"recalcGlobalElo"}, permission="op")
     public static void recalcGlobalElo(Player sender) {
-        List documents = MongoUtils.getCollection(MONGO_COLLECTION_NAME).find().into(new ArrayList());
+        List<Document> documents = MongoUtils.getCollection(MONGO_COLLECTION_NAME).find().into(new ArrayList());
         sender.sendMessage(ChatColor.GREEN + "Recalculating " + documents.size() + " players global elo...");
         int[] wrapper = new int[2];
         documents.forEach(document -> {
             try {
-                UUID uuid = UUID.fromString((String)((ArrayList)((Object)document.get((Object)"players", ArrayList.class))).get(0));
-                instance.saveElo((Set<UUID>)ImmutableSet.of((Object)uuid), instance.loadElo((Set<UUID>)ImmutableSet.of((Object)uuid)));
+                UUID uuid = UUID.fromString((String)((ArrayList)(document.get("players", ArrayList.class))).get(0));
+                instance.saveElo(ImmutableSet.of(uuid), instance.loadElo(ImmutableSet.of(uuid)));
                 wrapper[0] = wrapper[0] + 1;
                 if (wrapper[0] % 100 == 0) {
                     sender.sendMessage(ChatColor.GREEN + "Finished " + wrapper[0] + " out of " + documents.size() + " players...");
@@ -180,7 +181,7 @@ implements EloRepository {
 
     @Override
     public Map<String, Integer> topElo(KitType type2) throws IOException {
-        return cachedFormattedElo.getOrDefault(type2 == null ? "GLOBAL" : type2.getId(), (Map<String, Integer>)ImmutableMap.of());
+        return cachedFormattedElo.getOrDefault(type2 == null ? "GLOBAL" : type2.getId(), ImmutableMap.of());
     }
 
     private void refreshFormattedElo() {
@@ -200,32 +201,34 @@ implements EloRepository {
 
     @Override
     public Map<String, Integer> topPremiumElo(KitType type2) {
-        return cachedFormattedPremiumElo.getOrDefault(type2 == null ? "GLOBAL" : type2.getId(), (Map<String, Integer>)ImmutableMap.of());
+        return cachedFormattedPremiumElo.getOrDefault(type2 == null ? "GLOBAL" : type2.getId(), ImmutableMap.of());
     }
 
-    public void mapTop10(final String kitTypeName, final Map<String, Integer> toInsert) {
+    public void mapTop10(String kitTypeName, Map<String, Integer> toInsert) {
         try {
-            MongoUtils.getCollection(MONGO_COLLECTION_NAME).find().sort(Sorts.descending(kitTypeName)).limit(10).forEach(new Consumer<Document>(){
-
+            MongoUtils.getCollection(MONGO_COLLECTION_NAME).find().sort(Sorts.descending(kitTypeName)).limit(10).forEach(new Consumer<Document>() {
                 @Override
                 public void accept(Document document) {
                     Object eloNumber = document.get(kitTypeName);
-                    int elo = eloNumber != null && eloNumber instanceof Number ? ((Number)eloNumber).intValue() : 1000;
-                    toInsert.put(PatchedPlayerUtils.getFormattedName(UUID.fromString((String)((ArrayList)((Object)document.get((Object)"players", ArrayList.class))).get(0))), elo);
+                    int elo = eloNumber != null && eloNumber instanceof Number ? ((Number) eloNumber).intValue() : EloHandler.DEFAULT_ELO;
+                    toInsert.put(PatchedPlayerUtils.getFormattedName(UUID.fromString((String) document.get("players", ArrayList.class).get(0))), elo);
                 }
             });
-        }
-        catch (Exception exception) {
+
+        } catch (Exception exception) {
             exception.printStackTrace();
         }
     }
 
     public void mapPremiumTop10(String kitTypeName, Map<String, Integer> toInsert) {
         try {
-            MongoUtils.getCollection(MONGO_COLLECTION_PREMIUM_NAME).find().sort(Sorts.descending(kitTypeName)).limit(10).forEach(document -> {
-                Object eloNumber = document.get(kitTypeName);
-                int elo = eloNumber instanceof Number ? ((Number)eloNumber).intValue() : 1000;
-                toInsert.put(PatchedPlayerUtils.getFormattedName(UUID.fromString((String)((ArrayList)((Object)document.get((Object)"players", ArrayList.class))).get(0))), elo);
+            MongoUtils.getCollection(MONGO_COLLECTION_PREMIUM_NAME).find().sort(Sorts.descending(kitTypeName)).limit(10).forEach(new Consumer<Document>() {
+                @Override
+                public void accept(Document document) {
+                    Object eloNumber = document.get(kitTypeName);
+                    int elo = eloNumber instanceof Number ? ((Number)eloNumber).intValue() : 1000;
+                    toInsert.put(PatchedPlayerUtils.getFormattedName(UUID.fromString((String)((ArrayList)(document.get("players", ArrayList.class))).get(0))), elo);
+                }
             });
         }
         catch (Exception exception) {

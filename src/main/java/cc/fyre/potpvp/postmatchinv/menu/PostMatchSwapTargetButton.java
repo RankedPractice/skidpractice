@@ -31,7 +31,7 @@ extends Button {
     private final PostMatchPlayer newTarget;
 
     PostMatchSwapTargetButton(PostMatchPlayer newTarget) {
-        this.newTarget = (PostMatchPlayer)Preconditions.checkNotNull((Object)newTarget, (Object)"newTarget");
+        this.newTarget = (PostMatchPlayer)Preconditions.checkNotNull(newTarget, "newTarget");
     }
 
     public String getName(Player player) {
@@ -39,7 +39,7 @@ extends Button {
     }
 
     public List<String> getDescription(Player player) {
-        return ImmutableList.of((Object)"", (Object)(ChatColor.YELLOW + "Swap your view to " + FrozenUUIDCache.name((UUID)this.newTarget.getPlayerUuid()) + "'s inventory"));
+        return ImmutableList.of("", (ChatColor.YELLOW + "Swap your view to " + FrozenUUIDCache.name((UUID)this.newTarget.getPlayerUuid()) + "'s inventory"));
     }
 
     public Material getMaterial(Player player) {

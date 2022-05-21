@@ -49,7 +49,7 @@ public final class KitHandler {
 
     public List<Kit> getKits(Player player, KitType kitType) {
         ArrayList<Kit> kits = new ArrayList<Kit>();
-        for (Kit kit : this.kitData.getOrDefault(player.getUniqueId(), (List<Kit>)ImmutableList.of())) {
+        for (Kit kit : this.kitData.getOrDefault(player.getUniqueId(), ImmutableList.of())) {
             if (kit.getType() != kitType) continue;
             kits.add(kit);
         }
@@ -57,7 +57,7 @@ public final class KitHandler {
     }
 
     public Optional<Kit> getKit(Player player, KitType kitType, int slot) {
-        return this.kitData.getOrDefault(player.getUniqueId(), (List<Kit>)ImmutableList.of()).stream().filter(k -> k.getType() == kitType && k.getSlot() == slot).findFirst();
+        return this.kitData.getOrDefault(player.getUniqueId(), ImmutableList.of()).stream().filter(k -> k.getType() == kitType && k.getSlot() == slot).findFirst();
     }
 
     public Kit saveDefaultKit(Player player, KitType kitType, int slot) {
@@ -68,16 +68,18 @@ public final class KitHandler {
     }
 
     public void removeKit(Player player, KitType kitType, int slot) {
-        boolean removed = this.kitData.computeIfAbsent(player.getUniqueId(), i -> new ArrayList()).removeIf(k -> k.getType() == kitType && k.getSlot() == slot);
+        boolean removed = kitData.computeIfAbsent(player.getUniqueId(), i -> new ArrayList<>())
+                .removeIf(k -> k.getType() == kitType && k.getSlot() == slot);
+
         if (removed) {
-            this.saveKitsAsync(player);
+            saveKitsAsync(player);
         }
     }
 
     public void saveKitsAsync(Player player) {
         Bukkit.getScheduler().runTaskAsynchronously((Plugin)PotPvP.getInstance(), () -> {
             MongoCollection<Document> collection = MongoUtils.getCollection(MONGO_COLLECTION_NAME);
-            List kitJson = (List)JSON.parse(PotPvP.gson.toJson(this.kitData.getOrDefault(player.getUniqueId(), (List<Kit>)ImmutableList.of())));
+            List kitJson = (List)JSON.parse(PotPvP.gson.toJson(this.kitData.getOrDefault(player.getUniqueId(), ImmutableList.of())));
             Document query = new Document("_id", player.getUniqueId().toString());
             Document kitUpdate = new Document("$set", new Document("kits", kitJson));
             collection.updateOne(query, (Bson)kitUpdate, MongoUtils.UPSERT_OPTIONS);
@@ -104,7 +106,7 @@ public final class KitHandler {
         MongoCollection<Document> collection = MongoUtils.getCollection(MONGO_COLLECTION_NAME);
         Document playerKits = (Document)collection.find(new Document("_id", playerUuid.toString())).first();
         if (playerKits != null) {
-            List kits = (List)((Object)playerKits.get((Object)"kits", List.class));
+            List kits = (List)(playerKits.get("kits", List.class));
             Type listKit = new TypeToken<List<Kit>>(){}.getType();
             this.kitData.put(playerUuid, (List)PotPvP.gson.fromJson(JSON.serialize(kits), listKit));
         }

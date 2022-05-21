@@ -73,7 +73,7 @@ public final class ArenaHandler {
                 if (arenaInstancesFile.exists()) {
                     try (BufferedReader arenaInstancesReader = Files.newReader((File)arenaInstancesFile, (Charset)Charsets.UTF_8);){
                         Type arenaListType = new TypeToken<List<Arena>>(){}.getType();
-                        List arenaList = (List)PotPvP.gson.fromJson((Reader)arenaInstancesReader, arenaListType);
+                        List<Arena> arenaList = (List)PotPvP.gson.fromJson((Reader)arenaInstancesReader, arenaListType);
                         for (Arena arena : arenaList) {
                             this.arenaInstances.computeIfAbsent(arena.getSchematic(), i -> new HashMap());
                             this.arenaInstances.get(arena.getSchematic()).put(arena.getCopy(), arena);
@@ -83,7 +83,7 @@ public final class ArenaHandler {
                 if (!schematicsFile.exists()) break block18;
                 try (BufferedReader schematicsFileReader = Files.newReader((File)schematicsFile, (Charset)Charsets.UTF_8);){
                     Type schematicListType = new TypeToken<List<ArenaSchematic>>(){}.getType();
-                    List schematicList = (List)PotPvP.gson.fromJson((Reader)schematicsFileReader, schematicListType);
+                    List<ArenaSchematic> schematicList = (List)PotPvP.gson.fromJson((Reader)schematicsFileReader, schematicListType);
                     for (ArenaSchematic schematic : schematicList) {
                         this.schematics.put(schematic.getName(), schematic);
                     }

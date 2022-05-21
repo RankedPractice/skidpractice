@@ -83,11 +83,11 @@ implements Listener {
     private PacketContainer createLightningPacket(Location location) {
         PacketContainer lightningPacket = new PacketContainer(PacketType.Play.Server.SPAWN_ENTITY_WEATHER);
         lightningPacket.getModifier().writeDefaults();
-        lightningPacket.getIntegers().write(0, (Object)128);
-        lightningPacket.getIntegers().write(4, (Object)1);
-        lightningPacket.getIntegers().write(1, (Object)((int)(location.getX() * 32.0)));
-        lightningPacket.getIntegers().write(2, (Object)((int)(location.getY() * 32.0)));
-        lightningPacket.getIntegers().write(3, (Object)((int)(location.getZ() * 32.0)));
+        lightningPacket.getIntegers().write(0, 128);
+        lightningPacket.getIntegers().write(4, 1);
+        lightningPacket.getIntegers().write(1, ((int)(location.getX() * 32.0)));
+        lightningPacket.getIntegers().write(2, ((int)(location.getY() * 32.0)));
+        lightningPacket.getIntegers().write(3, ((int)(location.getZ() * 32.0)));
         return lightningPacket;
     }
 

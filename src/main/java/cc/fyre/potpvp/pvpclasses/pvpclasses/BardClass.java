@@ -53,7 +53,7 @@ implements Listener {
     public final Map<Material, BardEffect> BARD_PASSIVE_EFFECTS = new HashMap<Material, BardEffect>();
     private static Map<String, Long> lastEffectUsage = new ConcurrentHashMap<String, Long>();
     private static Map<String, Float> energy = new ConcurrentHashMap<String, Float>();
-    private static final Set<PotionEffectType> DEBUFFS = ImmutableSet.of((Object)PotionEffectType.POISON, (Object)PotionEffectType.SLOW, (Object)PotionEffectType.WEAKNESS, (Object)PotionEffectType.HARM, (Object)PotionEffectType.WITHER);
+    private static final Set<PotionEffectType> DEBUFFS = ImmutableSet.of(PotionEffectType.POISON, PotionEffectType.SLOW, PotionEffectType.WEAKNESS, PotionEffectType.HARM, PotionEffectType.WITHER);
     public static final int BARD_RANGE = 20;
     public static final int EFFECT_COOLDOWN = 10000;
     public static final float MAX_ENERGY = 100.0f;
@@ -167,7 +167,7 @@ implements Listener {
 
     public void giveBardEffect(Player source, BardEffect bardEffect, boolean friendly, boolean persistOldValues) {
         for (Player player : this.getNearbyPlayers(source, friendly)) {
-            if (PvPClassHandler.hasKitOn(player, this) && bardEffect.getPotionEffect() != null && bardEffect.getPotionEffect().getType().equals((Object)PotionEffectType.INCREASE_DAMAGE)) continue;
+            if (PvPClassHandler.hasKitOn(player, this) && bardEffect.getPotionEffect() != null && bardEffect.getPotionEffect().getType().equals(PotionEffectType.INCREASE_DAMAGE)) continue;
             if (bardEffect.getPotionEffect() != null) {
                 BardClass.smartAddPotion(player, bardEffect.getPotionEffect(), persistOldValues, this);
                 continue;

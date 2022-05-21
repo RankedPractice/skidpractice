@@ -44,12 +44,12 @@ public final class ManageCommand {
 
     @Command(names={"adminmanage host"}, permission="op")
     public static void toggleHost(CommandSender sender) {
-        PotPvP.getInstance().getGameHandler().setHostEnabled(!PotPvP.getInstance().getGameHandler().getHostEnabled());
+        /*PotPvP.getInstance().getGameHandler().setHostEnabled(!PotPvP.getInstance().getGameHandler().getHostEnabled());
         if (PotPvP.getInstance().getGameHandler().getHostEnabled()) {
             sender.sendMessage(ChatColor.GOLD + "Players can now host events.");
         } else {
             sender.sendMessage(ChatColor.GOLD + "Players can no longer host events.");
-        }
+        }*/
     }
 
     @Command(names={"adminmanage visibility"}, permission="op")
@@ -72,7 +72,7 @@ public final class ManageCommand {
         }
 
         public Map<Integer, Button> getButtons(Player player) {
-            return ImmutableMap.of((Object)3, (Object)((Object)new ManageKitButton()), (Object)5, (Object)((Object)new ManageArenaButton()));
+            return ImmutableMap.of(3, (new ManageKitButton()), 5, (new ManageArenaButton()));
         }
     }
 

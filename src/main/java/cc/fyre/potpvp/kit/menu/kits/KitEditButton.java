@@ -34,8 +34,8 @@ extends Button {
     private final int slot;
 
     KitEditButton(Optional<Kit> kitOpt, KitType kitType, int slot) {
-        this.kitOpt = (Optional)Preconditions.checkNotNull(kitOpt, (Object)"kitOpt");
-        this.kitType = (KitType)Preconditions.checkNotNull((Object)kitType, (Object)"kitType");
+        this.kitOpt = (Optional)Preconditions.checkNotNull(kitOpt, "kitOpt");
+        this.kitType = (KitType)Preconditions.checkNotNull(kitType, "kitType");
         this.slot = slot;
     }
 
@@ -44,7 +44,7 @@ extends Button {
     }
 
     public List<String> getDescription(Player player) {
-        return ImmutableList.of((Object)"", (Object)(ChatColor.YELLOW + "Click to edit this kit."));
+        return ImmutableList.of("", (ChatColor.YELLOW + "Click to edit this kit."));
     }
 
     public Material getMaterial(Player player) {

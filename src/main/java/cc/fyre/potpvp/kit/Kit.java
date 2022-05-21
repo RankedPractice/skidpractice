@@ -100,10 +100,10 @@ public final class Kit {
             MatchTeam team = match.getTeam(player.getUniqueId());
             if (team == null) continue;
             if (team.getId() == 0) {
-                player.getInventory().setItem(woolSlot.intValue(), new ItemStack(Material.WOOL, 64, 11));
+                player.getInventory().setItem(woolSlot.intValue(), new ItemStack(Material.WOOL, 64, (short) 11));
                 continue;
             }
-            player.getInventory().setItem(woolSlot.intValue(), new ItemStack(Material.WOOL, 64, 14));
+            player.getInventory().setItem(woolSlot.intValue(), new ItemStack(Material.WOOL, 64, (short) 14));
         }
         Bukkit.getScheduler().runTaskLater((Plugin)PotPvP.getInstance(), () -> ((Player)player).updateInventory(), 1L);
     }
