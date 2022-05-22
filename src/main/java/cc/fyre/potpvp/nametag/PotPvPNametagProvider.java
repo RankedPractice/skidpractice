@@ -20,71 +20,93 @@ import java.util.Optional;
 import java.util.UUID;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import rip.bridge.bridge.BridgeGlobal;
+import rip.bridge.bridge.global.profile.Profile;
 import rip.bridge.qlib.nametag.NametagInfo;
 import rip.bridge.qlib.nametag.NametagProvider;
 
-public final class PotPvPNametagProvider
-extends NametagProvider {
+public final class PotPvPNametagProvider extends NametagProvider {
+
     public PotPvPNametagProvider() {
         super("PotPvP Provider", 5);
     }
 
     public static String getNameColor(Player toRefresh, Player refreshFor) {
         MatchHandler matchHandler = PotPvP.getInstance().getMatchHandler();
+
         if (matchHandler.isPlayingOrSpectatingMatch(toRefresh)) {
-            return PotPvPNametagProvider.getNameColorMatch(toRefresh, refreshFor);
+            return ChatColor.translateAlternateColorCodes('&', getNameColorMatch(toRefresh, refreshFor).toString());
+        } else {
+            return ChatColor.translateAlternateColorCodes('&', getNameColorLobby(toRefresh, refreshFor));
         }
-        return PotPvPNametagProvider.getNameColorLobby(toRefresh, refreshFor);
     }
 
-    private static String getNameColorMatch(Player toRefresh, Player refreshFor) {
+    private static ChatColor getNameColorMatch(Player toRefresh, Player refreshFor) {
         MatchHandler matchHandler = PotPvP.getInstance().getMatchHandler();
+
         Match toRefreshMatch = matchHandler.getMatchPlayingOrSpectating(toRefresh);
         MatchTeam toRefreshTeam = toRefreshMatch.getTeam(toRefresh.getUniqueId());
+
+        // they're a spectator, so we see them as gray
         if (toRefreshTeam == null) {
-            return ChatColor.GRAY.toString();
+            return ChatColor.GRAY;
         }
+
         MatchTeam refreshForTeam = toRefreshMatch.getTeam(refreshFor.getUniqueId());
+
+        // if we can't find a current team, check if they have any
+        // previously teams we can use for this
         if (refreshForTeam == null) {
             refreshForTeam = toRefreshMatch.getPreviousTeam(refreshFor.getUniqueId());
         }
+
+        // if we were/are both on teams display a friendly/enemy color
         if (refreshForTeam != null) {
             if (toRefreshTeam == refreshForTeam) {
-                return ChatColor.GREEN.toString();
+                return ChatColor.GREEN;
+            } else {
+                if (ArcherClass.getMarkedPlayers().containsKey(toRefresh.getName()) && System.currentTimeMillis() < ArcherClass.getMarkedPlayers().get(toRefresh.getName())) {
+                    return ChatColor.YELLOW;
+                }
+                return ChatColor.RED;
             }
-            if (ArcherClass.getMarkedPlayers().containsKey(toRefresh.getName()) && System.currentTimeMillis() < ArcherClass.getMarkedPlayers().get(toRefresh.getName())) {
-                return ChatColor.YELLOW.toString();
-            }
-            return ChatColor.RED.toString();
         }
+
+        // if we're a spectator just display standard colors
         List<MatchTeam> teams = toRefreshMatch.getTeams();
+
+        // we have predefined colors for 'normal' matches
         if (teams.size() == 2) {
+            // team 1 = RED, team 2 = AQUA
             if (toRefreshTeam == teams.get(0)) {
-                return ChatColor.LIGHT_PURPLE.toString();
+                return ChatColor.RED;
+            } else {
+                return ChatColor.AQUA;
             }
-            return ChatColor.AQUA.toString();
+        } else {
+            // we don't have colors defined for larger matches
+            // everyone is just red for spectators
+            return ChatColor.RED;
         }
-        return ChatColor.RED.toString();
     }
 
     private static String getNameColorLobby(Player toRefresh, Player refreshFor) {
-        boolean refreshForFollowingTarget;
         FollowHandler followHandler = PotPvP.getInstance().getFollowHandler();
+
         Optional<UUID> following = followHandler.getFollowing(refreshFor);
-        boolean bl = refreshForFollowingTarget = following.isPresent() && following.get().equals(toRefresh.getUniqueId());
+        Profile profile = BridgeGlobal.getProfileHandler().getProfileByUUID(refreshFor.getUniqueId());
+        boolean refreshForFollowingTarget = following.isPresent() && following.get().equals(toRefresh.getUniqueId());
+
         if (refreshForFollowingTarget) {
             return ChatColor.AQUA.toString();
+        } else {
+            return profile.getCurrentGrant().getRank().getColor();
         }
-        return ChatColor.AQUA.toString();
     }
 
     public NametagInfo fetchNametag(Player toRefresh, Player refreshFor) {
-        /*Game game = PotPvP.getInstance().gameHandler.getOngoingGame();
-        if (game != null && game.getPlayers().contains(toRefresh) && game.getPlayers().contains(refreshFor) && game.getState() != GameState.ENDED) {
-            return PotPvPNametagProvider.createNametag((String)game.getEvent().getNameTag(game, toRefresh, refreshFor), (String)"");
-        }*/
-        String nametag = ChatColor.translateAlternateColorCodes((char)'&', (String)PotPvPNametagProvider.getNameColor(toRefresh, refreshFor));
-        return PotPvPNametagProvider.createNametag((String)nametag, (String)"");
+        String prefixColor = getNameColor(toRefresh, refreshFor);
+        return PotPvPNametagProvider.createNametag(prefixColor, "");
     }
 }
 

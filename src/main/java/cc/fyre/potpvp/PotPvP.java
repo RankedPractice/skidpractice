@@ -128,13 +128,16 @@ public final class PotPvP extends JavaPlugin {
     private ProfileManager profileManager;
     private LeaderboardHandler leaderboardHandler;
     private PremiumMatchesHandler premiumMatchesHandler;
-    private ChatColor dominantColor = ChatColor.AQUA;
+    private ChatColor dominantColor;
+
+    public PotPvP() {
+        this.dominantColor = ChatColor.AQUA;
+    }
 
     public void onEnable() {
-        instance = this;
-        this.saveDefaultConfig();
+        (PotPvP.instance = this).saveDefaultConfig();
         this.setupMongo();
-        for (World world : Bukkit.getWorlds()) {
+        for (final World world : Bukkit.getWorlds()) {
             world.setGameRuleValue("doDaylightCycle", "false");
             world.setGameRuleValue("doMobSpawning", "false");
             world.setTime(6000L);
@@ -168,17 +171,18 @@ public final class PotPvP extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents((Listener)new TabFixListener(), (Plugin)this);
         this.getServer().getPluginManager().registerEvents((Listener)new ToggleVisibilityListener(), (Plugin)this);
         FrozenCommandHandler.registerAll((Plugin)this);
-        FrozenCommandHandler.registerParameterType(KitType.class, (ParameterType)new KitTypeParameterType());
+        FrozenCommandHandler.registerParameterType((Class)KitType.class, (ParameterType)new KitTypeParameterType());
         this.registerPersistence();
         FrozenNametagHandler.registerProvider((NametagProvider)new PotPvPNametagProvider());
-        FrozenScoreboardHandler.setConfiguration((ScoreboardConfiguration)PotPvPScoreboardConfiguration.create());
+        FrozenScoreboardHandler.setConfiguration(PotPvPScoreboardConfiguration.create());
         FrozenTabHandler.setLayoutProvider((LayoutProvider)new PotPvPLayoutProvider());
     }
 
     public void onDisable() {
-        for (Match match : this.matchHandler.getHostedMatches()) {
-            if (!match.getKitType().isBuildingAllowed()) continue;
-            match.getArena().restore();
+        for (final Match match : this.matchHandler.getHostedMatches()) {
+            if (match.getKitType().isBuildingAllowed()) {
+                match.getArena().restore();
+            }
         }
         try {
             this.arenaHandler.saveSchematics();
@@ -186,15 +190,15 @@ public final class PotPvP extends JavaPlugin {
         catch (IOException e) {
             e.printStackTrace();
         }
-        for (String playerName : PvPClassHandler.getEquippedKits().keySet()) {
+        for (final String playerName : PvPClassHandler.getEquippedKits().keySet()) {
             PvPClassHandler.getEquippedKits().get(playerName).remove(this.getServer().getPlayerExact(playerName));
         }
-        instance = null;
+        PotPvP.instance = null;
     }
 
     private void setupMongo() {
         this.mongoClient = new MongoClient(this.getConfig().getString("Mongo.Host"), this.getConfig().getInt("Mongo.Port"));
-        String databaseId = this.getConfig().getString("Mongo.Database");
+        final String databaseId = this.getConfig().getString("Mongo.Database");
         this.mongoDatabase = this.mongoClient.getDatabase(databaseId);
     }
 
@@ -206,7 +210,7 @@ public final class PotPvP extends JavaPlugin {
     }
 
     public static PotPvP getInstance() {
-        return instance;
+        return PotPvP.instance;
     }
 
     public MongoDatabase getMongoDatabase() {
@@ -286,20 +290,16 @@ public final class PotPvP extends JavaPlugin {
     }
 
     static {
-        gson = new GsonBuilder().registerTypeHierarchyAdapter(PotionEffect.class, (Object)new PotionEffectAdapter()).registerTypeHierarchyAdapter(ItemStack.class, (Object)new ItemStackAdapter()).registerTypeHierarchyAdapter(Location.class, (Object)new LocationAdapter()).registerTypeHierarchyAdapter(Vector.class, (Object)new VectorAdapter()).registerTypeAdapter(BlockVector.class, (Object)new BlockVectorAdapter()).registerTypeHierarchyAdapter(KitType.class, (Object)new KitTypeJsonAdapter()).registerTypeAdapter(ChunkSnapshot.class, (Object)new ChunkSnapshotAdapter()).serializeNulls().create();
+        PotPvP.gson = new GsonBuilder().registerTypeHierarchyAdapter((Class)PotionEffect.class, (Object)new PotionEffectAdapter()).registerTypeHierarchyAdapter((Class)ItemStack.class, (Object)new ItemStackAdapter()).registerTypeHierarchyAdapter((Class)Location.class, (Object)new LocationAdapter()).registerTypeHierarchyAdapter((Class)Vector.class, (Object)new VectorAdapter()).registerTypeAdapter(BlockVector.class, (Object)new BlockVectorAdapter()).registerTypeHierarchyAdapter((Class)KitType.class, (Object)new KitTypeJsonAdapter()).registerTypeAdapter(ChunkSnapshot.class, (Object)new ChunkSnapshotAdapter()).serializeNulls().create();
     }
 
-    private static class ChunkSnapshotAdapter
-            extends TypeAdapter<ChunkSnapshot> {
-        private ChunkSnapshotAdapter() {
-        }
-
-        public ChunkSnapshot read(JsonReader arg0) {
+    private static class ChunkSnapshotAdapter extends TypeAdapter<ChunkSnapshot>
+    {
+        public ChunkSnapshot read(final JsonReader arg0) {
             return null;
         }
 
-        public void write(JsonWriter arg0, ChunkSnapshot arg1) {
+        public void write(final JsonWriter arg0, final ChunkSnapshot arg1) {
         }
     }
 }
-

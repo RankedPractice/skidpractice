@@ -86,10 +86,10 @@ implements Listener {
         if (match == null) {
             return;
         }
-        if (match.getKitType().getId().equalsIgnoreCase("bridges")) {
+        if (match.getKitType().getId().equalsIgnoreCase("Bridges")) {
             return;
         }
-        if (match.getKitType().getId().equalsIgnoreCase("bedfight")) {
+        if (match.getKitType().getId().equalsIgnoreCase("BedFight")) {
             return;
         }
         match.markDead(player);
@@ -152,24 +152,24 @@ implements Listener {
         }
         Arena arena = match.getArena();
         Cuboid bounds = arena.getBounds();
-        if (match.getState() == MatchState.IN_PROGRESS && !match.isSpectator(player.getUniqueId()) && (match.getKitType().getId().equals("SUMO") || match.getKitType().getId().equals("SPLEEF")) && BlockUtil.isOnLiquid((Location)to, (int)0)) {
+        if (match.getState() == MatchState.IN_PROGRESS && !match.isSpectator(player.getUniqueId()) && (match.getKitType().getId().equals("Sumo") || match.getKitType().getId().equals("Spleef")) && BlockUtil.isOnLiquid((Location)to, (int)0)) {
             player.damage(player.getHealth() + 20.0);
         }
-        if (event.getTo().getY() < match.getArena().getTeam1Spawn().getY() - 18.0 && match.getKitType().getId().equalsIgnoreCase("bridges")) {
+        if (event.getTo().getY() < match.getArena().getTeam1Spawn().getY() - 18.0 && match.getKitType().getId().equalsIgnoreCase("Bridges")) {
             match.markDead(player);
             return;
         }
-        if ((event.getTo().getBlock().getType() == Material.LAVA || event.getTo().getBlock().getType() == Material.STATIONARY_LAVA) && match.getKitType().getId().equalsIgnoreCase("bridges")) {
+        if ((event.getTo().getBlock().getType() == Material.LAVA || event.getTo().getBlock().getType() == Material.STATIONARY_LAVA) && match.getKitType().getId().equalsIgnoreCase("Bridges")) {
             BridgeEnterWaterPortalEvent bridgeEnterWaterPortalEvent = new BridgeEnterWaterPortalEvent(player, match);
             Bukkit.getPluginManager().callEvent((Event)bridgeEnterWaterPortalEvent);
             return;
         }
-        if ((event.getTo().getBlock().getType() == Material.WATER || event.getTo().getBlock().getType() == Material.STATIONARY_WATER) && match.getKitType().getId().equalsIgnoreCase("bridges")) {
+        if ((event.getTo().getBlock().getType() == Material.WATER || event.getTo().getBlock().getType() == Material.STATIONARY_WATER) && match.getKitType().getId().equalsIgnoreCase("Bridges")) {
             BridgeEnterLavaPortalEvent bridgeEnterLavaPortalEvent = new BridgeEnterLavaPortalEvent(player, match);
             Bukkit.getPluginManager().callEvent((Event)bridgeEnterLavaPortalEvent);
             return;
         }
-        if (match.getKitType().getId().equalsIgnoreCase("PEARLFIGHT")) {
+        if (match.getKitType().getId().equalsIgnoreCase("PearlFight")) {
             if (player.getLocation().getY() < match.getArena().getTeam1Spawn().getY() - 10.0) {
                 player.teleport(match.getArena().getSpectatorSpawn());
                 new BukkitRunnable(){
@@ -184,9 +184,9 @@ implements Listener {
         if (!bounds.contains(to) || !bounds.contains(to.getBlockX(), to.getBlockY() + 2, to.getBlockZ())) {
             if (match.isSpectator(player.getUniqueId())) {
                 player.teleport(arena.getSpectatorSpawn());
-            } else if (match.getKitType().getId().equals("MLGRUSH")) {
+            } else if (match.getKitType().getId().equals("MLGRush")) {
                 match.markDead(player, true);
-            } else if (match.getKitType().getId().equals("BEDFIGHT")) {
+            } else if (match.getKitType().getId().equals("BedFight")) {
                 match.markDead(player);
             } else if (to.getBlockY() >= bounds.getUpperY() || to.getBlockY() <= bounds.getLowerY()) {
                 player.teleport(arena.getSpectatorSpawn());
@@ -212,8 +212,8 @@ implements Listener {
             return;
         }
         Match match = matchHandler.getMatchPlaying(damager);
-        boolean isSpleef = match != null && match.getKitType().getId().equals("SPLEEF");
-        boolean bl = isSumo = match != null && match.getKitType().getId().equals("SUMO");
+        boolean isSpleef = match != null && match.getKitType().getId().equals("Spleef");
+        boolean bl = isSumo = match != null && match.getKitType().getId().equals("Sumo");
         if (match != null) {
             MatchTeam victimTeam = match.getTeam(victim.getUniqueId());
             MatchTeam damagerTeam = match.getTeam(damager.getUniqueId());

@@ -123,7 +123,7 @@
             <artifactId>spigot-server</artifactId>
             <version>1.7.10-R0.1-SNAPSHOT</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/libs/spigot.jar</systemPath>
+            <systemPath>${project.basedir}/libs/mspigot-server-1.7.10-R0.1-SNAPSHOT.jar</systemPath>
         </dependency>
         <!-- Clans -->
         <!-- Holograms -->
@@ -133,6 +133,12 @@
             <version>LATEST</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/libs/qLib.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>rip.bridge</groupId>
+            <artifactId>Bridge</artifactId>
+            <version>LATEST</version>
+            <scope>provided</scope>
         </dependency>
         <!-- MongoDB -->
         <dependency>
@@ -167,7 +173,7 @@
             <artifactId>ProtocolLib</artifactId>
             <version>LATEST</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/libs/ProtocolLib-3.7.0.jar</systemPath>
+            <systemPath>${project.basedir}/libs/ProtocolLib.jar</systemPath>
         </dependency>
         <!-- Kotlin -->
         <dependency>

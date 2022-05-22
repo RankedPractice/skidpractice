@@ -70,7 +70,7 @@ implements Listener {
         Player player = event.getPlayer();
         MatchHandler matchHandler = PotPvP.getInstance().getMatchHandler();
         Match match = matchHandler.getMatchPlaying(player);
-        if (match.getKitType().getId().equalsIgnoreCase("bridges") && event.getItem() != null && event.getItem().getType() == Material.GOLDEN_APPLE) {
+        if (match.getKitType().getId().equalsIgnoreCase("Bridges") && event.getItem() != null && event.getItem().getType() == Material.GOLDEN_APPLE) {
             event.getPlayer().setHealth(event.getPlayer().getMaxHealth());
         }
     }
@@ -80,7 +80,7 @@ implements Listener {
         Player player = event.getPlayer();
         MatchHandler matchHandler = PotPvP.getInstance().getMatchHandler();
         Match match = matchHandler.getMatchPlaying(player);
-        if (match.getKitType().getId().equalsIgnoreCase("bridges")) {
+        if (match.getKitType().getId().equalsIgnoreCase("Bridges")) {
             event.setCancelled(true);
         }
     }
@@ -94,7 +94,7 @@ implements Listener {
             if (match == null) {
                 return;
             }
-            if (!match.getKitType().getId().equalsIgnoreCase("bridges")) {
+            if (!match.getKitType().getId().equalsIgnoreCase("Bridges")) {
                 return;
             }
             match.getKills().put(player.getKiller().getUniqueId(), match.getKills().get(player.getKiller().getUniqueId()) + 1);
@@ -171,7 +171,7 @@ implements Listener {
             if (match == null) {
                 return;
             }
-            if (!match.getKitType().getId().equalsIgnoreCase("bridges")) {
+            if (!match.getKitType().getId().equalsIgnoreCase("Bridges")) {
                 return;
             }
             if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
@@ -186,7 +186,7 @@ implements Listener {
             List<String> modes;
             Player player = (Player)event.getEntity();
             Match match = PotPvP.getInstance().getMatchHandler().getMatchPlaying(player);
-            if (match != null && (modes = Arrays.asList("boxing", "sumo", "wizard", "pearlfight", "bridges", "archer", "skywars", "combo")).contains(match.getKitType().getId())) {
+            if (match != null && (modes = Arrays.asList("Boxing", "Sumo", "wizard", "PearlFight", "Bridges", "Archer", "skywars", "combo")).contains(match.getKitType().getId())) {
                 player.setFoodLevel(20);
             }
         }
@@ -271,7 +271,7 @@ implements Listener {
             final Player player = (Player)event.getEntity();
             MatchHandler matchHandler = PotPvP.getInstance().getMatchHandler();
             Match match = matchHandler.getMatchPlaying(player);
-            if (match.getKitType().getId().equalsIgnoreCase("bridges")) {
+            if (match.getKitType().getId().equalsIgnoreCase("Bridges")) {
                 new BukkitRunnable(){
 
                     public void run() {

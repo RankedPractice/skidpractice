@@ -30,7 +30,7 @@ implements Listener {
             return;
         }
         Match match = PotPvP.getInstance().getMatchHandler().getMatchPlaying(player);
-        if (match == null || !match.getKitType().getId().equals("SUMO") || match.getState() != MatchState.COUNTDOWN) {
+        if (match == null || !match.getKitType().getId().equals("Sumo") || match.getState() != MatchState.COUNTDOWN) {
             return;
         }
         event.getPlayer().teleport(from);

@@ -34,10 +34,15 @@ import org.bukkit.inventory.ItemStack;
 import rip.bridge.qlib.menu.Button;
 import rip.bridge.qlib.menu.Menu;
 
-public class CoinsShopMenu
-extends Menu {
+public class CoinsShopMenu extends Menu {
+
     public String getTitle(Player player) {
         return CC.translate("&b&lCoin Shop");
+    }
+
+    @Override
+    public void setAutoUpdate(boolean autoUpdate) {
+        super.setAutoUpdate(true);
     }
 
     public Map<Integer, Button> getButtons(Player player) {

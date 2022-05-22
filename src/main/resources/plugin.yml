@@ -1,4 +1,6 @@
-name: SkiddingghoRBBRBRR
+name: PotPvP
+author: ZuieCead
 version: '${project.version}'
-main: me.ziuecead.skidding.skiddingghorbbrbrr.SkiddingghoRBBRBRR
-api-version: 1.18
+main: cc.fyre.potpvp.PotPvP
+depend:
+  - qLib

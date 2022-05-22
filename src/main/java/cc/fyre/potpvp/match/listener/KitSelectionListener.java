@@ -44,7 +44,7 @@ implements Listener {
         KitHandler kitHandler = PotPvP.getInstance().getKitHandler();
         Match match = event.getMatch();
         KitType kitType = match.getKitType();
-        if (kitType.getId().equals("SUMO")) {
+        if (kitType.getId().equals("Sumo")) {
             return;
         }
         for (Player player : Bukkit.getOnlinePlayers()) {

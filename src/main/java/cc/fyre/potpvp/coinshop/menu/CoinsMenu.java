@@ -33,10 +33,15 @@ import org.bukkit.event.inventory.ClickType;
 import rip.bridge.qlib.menu.Button;
 import rip.bridge.qlib.menu.Menu;
 
-public class CoinsMenu
-extends Menu {
+public class CoinsMenu extends Menu {
+
     public String getTitle(Player player) {
         return CC.translate("&6Star Shop");
+    }
+
+    @Override
+    public void setAutoUpdate(boolean autoUpdate) {
+        super.setAutoUpdate(true);
     }
 
     public Map<Integer, Button> getButtons(Player player) {
@@ -56,8 +61,8 @@ extends Menu {
         return 27;
     }
 
-    public static class CoinsButton
-    extends Button {
+    public static class CoinsButton extends Button {
+
         public String getName(Player player) {
             return CC.translate("&b&lYour Coins");
         }

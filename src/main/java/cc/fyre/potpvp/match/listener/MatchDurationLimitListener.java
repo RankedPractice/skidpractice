@@ -44,7 +44,7 @@ implements Listener {
                     this.cancel();
                     return;
                 }
-                if (match.getKitType().getId().equals("SUMO") || match.getKitType().getId().equals("Boxing")) {
+                if (match.getKitType().getId().equals("Sumo") || match.getKitType().getId().equals("Boxing")) {
                     match.getTeams().forEach(t -> t.getAllMembers().stream().map(Bukkit::getPlayer).filter(Objects::nonNull).forEach(p -> {
                         p.setHealth(20.0);
                         p.setFoodLevel(20);

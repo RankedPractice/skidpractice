@@ -47,7 +47,7 @@ implements Listener {
         if (oppositeTeam == null) {
             return;
         }
-        if (match.getKitType().getId().equals("MLGRUSH") && block.getType() == Material.BED_BLOCK && (bedBrokenTeam = this.getMatchTeam(match, block)) == oppositeTeam.getId()) {
+        if (match.getKitType().getId().equals("MLGRush") && block.getType() == Material.BED_BLOCK && (bedBrokenTeam = this.getMatchTeam(match, block)) == oppositeTeam.getId()) {
             match.getArena().restore();
             team.incrementPoints();
             if (team.getPoints() >= 5) {

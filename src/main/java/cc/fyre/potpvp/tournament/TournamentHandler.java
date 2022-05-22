@@ -222,13 +222,13 @@ implements Listener {
         List<KitType> viewableKits = KitType.getAllTypes().stream().filter(kit -> !kit.isHidden()).collect(Collectors.toList());
         allStatuses.add(new TournamentStatus(0, ImmutableList.of(1), ImmutableList.of(16, 32), viewableKits));
         allStatuses.add(new TournamentStatus(250, ImmutableList.of(1), ImmutableList.of(32), viewableKits));
-        if (KitType.byId("NODEBUFF") != null) {
-            allStatuses.add(new TournamentStatus(300, ImmutableList.of(1), ImmutableList.of(48, 64), (List<KitType>)ImmutableList.of(KitType.byId("NODEBUFF"))));
-            allStatuses.add(new TournamentStatus(400, ImmutableList.of(1), ImmutableList.of(64), (List<KitType>)ImmutableList.of(KitType.byId("NODEBUFF"))));
-            allStatuses.add(new TournamentStatus(500, ImmutableList.of(1), ImmutableList.of(128), (List<KitType>)ImmutableList.of(KitType.byId("NODEBUFF"))));
-            allStatuses.add(new TournamentStatus(600, ImmutableList.of(1), ImmutableList.of(128), (List<KitType>)ImmutableList.of(KitType.byId("NODEBUFF"))));
-            allStatuses.add(new TournamentStatus(700, ImmutableList.of(1), ImmutableList.of(128), (List<KitType>)ImmutableList.of(KitType.byId("NODEBUFF"))));
-            allStatuses.add(new TournamentStatus(800, ImmutableList.of(1), ImmutableList.of(128), (List<KitType>)ImmutableList.of(KitType.byId("NODEBUFF"))));
+        if (KitType.byId("NoDebuff") != null) {
+            allStatuses.add(new TournamentStatus(300, ImmutableList.of(1), ImmutableList.of(48, 64), (List<KitType>)ImmutableList.of(KitType.byId("NoDebuff"))));
+            allStatuses.add(new TournamentStatus(400, ImmutableList.of(1), ImmutableList.of(64), (List<KitType>)ImmutableList.of(KitType.byId("NoDebuff"))));
+            allStatuses.add(new TournamentStatus(500, ImmutableList.of(1), ImmutableList.of(128), (List<KitType>)ImmutableList.of(KitType.byId("NoDebuff"))));
+            allStatuses.add(new TournamentStatus(600, ImmutableList.of(1), ImmutableList.of(128), (List<KitType>)ImmutableList.of(KitType.byId("NoDebuff"))));
+            allStatuses.add(new TournamentStatus(700, ImmutableList.of(1), ImmutableList.of(128), (List<KitType>)ImmutableList.of(KitType.byId("NoDebuff"))));
+            allStatuses.add(new TournamentStatus(800, ImmutableList.of(1), ImmutableList.of(128), (List<KitType>)ImmutableList.of(KitType.byId("NoDebuff"))));
         }
     }
 

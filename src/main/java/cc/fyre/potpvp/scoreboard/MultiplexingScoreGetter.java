@@ -18,8 +18,8 @@ import org.bukkit.entity.Player;
 import rip.bridge.qlib.scoreboard.ScoreGetter;
 import rip.bridge.qlib.util.LinkedList;
 
-final class MultiplexingScoreGetter
-implements ScoreGetter {
+final class MultiplexingScoreGetter implements ScoreGetter {
+
     private final BiConsumer<Player, LinkedList<String>> matchScoreGetter;
     private final BiConsumer<Player, LinkedList<String>> lobbyScoreGetter;
 
@@ -36,20 +36,16 @@ implements ScoreGetter {
         SettingHandler settingHandler = PotPvP.getInstance().getSettingHandler();
         if (settingHandler.getSetting(player, Setting.SHOW_SCOREBOARD)) {
             if (matchHandler.isPlayingOrSpectatingMatch(player)) {
-                this.matchScoreGetter.accept(player, scores);
+                matchScoreGetter.accept(player, scores);
             } else {
-                /*Game game = GameQueue.INSTANCE.getCurrentGame(player);
-                if (game != null && game.getPlayers().contains(player) && game.getState() != GameState.ENDED) {
-                    this.gameScoreGetter.accept(player, scores);
-                } else {
-                    this.lobbyScoreGetter.accept(player, scores);
-                }*/
+                lobbyScoreGetter.accept(player, scores);
             }
         }
+
         if (!scores.isEmpty()) {
             scores.addFirst("&a&7&m--------------------");
             scores.add("");
-            scores.add("&balphadevs.xyz");
+            scores.add("&beast.lunar.gg");
             scores.add("&f&7&m--------------------");
         }
     }

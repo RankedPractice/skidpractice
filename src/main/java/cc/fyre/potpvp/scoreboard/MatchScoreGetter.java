@@ -72,7 +72,7 @@ implements BiConsumer<Player, LinkedList<String>> {
         Match match = matchHandler.getMatchPlayingOrSpectating(player);
         if (match == null) {
             if (followingOpt.isPresent()) {
-                scores.add(("&fFollowing: &6" + FrozenUUIDCache.name((UUID)followingOpt.get())));
+                scores.add(("&fFollowing: &b" + FrozenUUIDCache.name(followingOpt.get())));
             }
             if (player.hasMetadata("ModMode")) {
                 scores.add("&6Silent Mode Enabled");
@@ -91,7 +91,7 @@ implements BiConsumer<Player, LinkedList<String>> {
             this.renderPingLines((List<String>)scores, match, player);
         }
         if (followingOpt.isPresent()) {
-            scores.add(("&fFollowing: &6" + FrozenUUIDCache.name((UUID)followingOpt.get())));
+            scores.add(("&fFollowing: &b" + FrozenUUIDCache.name((UUID)followingOpt.get())));
         }
         if (player.hasMetadata("ModMode")) {
             scores.add("&6Silent Mode Enabled");
@@ -135,13 +135,13 @@ implements BiConsumer<Player, LinkedList<String>> {
         if (match.getKitType().getId().equalsIgnoreCase("Boxing")) {
             this.renderBoxingLines(scores, ourTeam, otherTeam);
         }
-        if (match.getKitType().getId().equalsIgnoreCase("MLGRUSH")) {
+        if (match.getKitType().getId().equalsIgnoreCase("MLGRush")) {
             this.renderMlgLines(scores, ourTeam, otherTeam);
         }
         if (match.getKitType().getId().equalsIgnoreCase("Bridges")) {
             this.renderBridgesLines(scores, ourTeam, otherTeam, player);
         }
-        if (match.getKitType().getId().equalsIgnoreCase("bedfight")) {
+        if (match.getKitType().getId().equalsIgnoreCase("BedFight")) {
             this.renderBedFightLines(scores, ourTeam, otherTeam, player);
         }
         Player other = Bukkit.getPlayer((UUID)otherTeam.getFirstMember());
@@ -175,7 +175,7 @@ implements BiConsumer<Player, LinkedList<String>> {
 
     private void renderBridgesLines(List<String> scores, MatchTeam ourTeam, MatchTeam otherTeam, Player player) {
         Match match = PotPvP.getInstance().getMatchHandler().getMatchPlaying(Bukkit.getPlayer((UUID)player.getUniqueId()));
-        if (match.getKitType().getId().equalsIgnoreCase("BRIDGES")) {
+        if (match.getKitType().getId().equalsIgnoreCase("Bridges")) {
             scores.add("&9[B]&7: " + BridgeUtil.barBuilder(match.getWins().get(match.getTeams().get(1)), "&9"));
             scores.add("&c[R]&7: " + BridgeUtil.barBuilder(match.getWins().get(match.getTeams().get(0)), "&c"));
         }
@@ -183,7 +183,7 @@ implements BiConsumer<Player, LinkedList<String>> {
 
     private void renderBedFightLines(List<String> scores, MatchTeam ourTeam, MatchTeam otherTeam, Player player) {
         Match match = PotPvP.getInstance().getMatchHandler().getMatchPlaying(Bukkit.getPlayer((UUID)player.getUniqueId()));
-        if (match.getKitType().getId().equalsIgnoreCase("BEDFIGHT")) {
+        if (match.getKitType().getId().equalsIgnoreCase("BedFight")) {
             if (ourTeam.getId() == 0) {
                 scores.add("&9[B]&7: " + (ourTeam.isBedBroken() ? "&c\u2717" : "&a\u2713"));
                 scores.add("&c[R]&7: " + (otherTeam.isBedBroken() ? "&c\u2717" : "&a\u2713"));

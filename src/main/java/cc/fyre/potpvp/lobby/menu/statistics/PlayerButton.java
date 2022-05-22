@@ -1,59 +1,55 @@
-/*
- * Decompiled with CFR 0.152.
- *
- * Could not load the following classes:
- *  com.google.common.collect.Lists
- *  org.bukkit.ChatColor
- *  org.bukkit.Material
- *  org.bukkit.entity.Player
- *  rip.bridge.bridge.BridgeGlobal
- *  rip.bridge.bridge.global.profile.Profile
- *  rip.bridge.qlib.menu.Button
- */
 package cc.fyre.potpvp.lobby.menu.statistics;
 
 import cc.fyre.potpvp.PotPvP;
 import cc.fyre.potpvp.elo.EloHandler;
 import cc.fyre.potpvp.kittype.KitType;
+import cc.fyre.potpvp.util.CC;
 import com.google.common.collect.Lists;
-import java.util.ArrayList;
-import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import rip.bridge.bridge.BridgeGlobal;
+import rip.bridge.bridge.global.profile.Profile;
 import rip.bridge.qlib.menu.Button;
 
-public class PlayerButton
-extends Button {
+import java.util.List;
+
+public class PlayerButton extends Button {
+
     private static EloHandler eloHandler = PotPvP.getInstance().getEloHandler();
 
+    @Override
     public String getName(Player player) {
-        return this.getColoredName(player) + ChatColor.WHITE + ChatColor.BOLD + " | " + ChatColor.WHITE + "Statistics";
+        Profile profile = BridgeGlobal.getProfileHandler().getProfileByUUID(player.getUniqueId());
+        return profile.getCurrentGrant().getRank().getColor() + player.getName() + ChatColor.WHITE + ChatColor.BOLD + " ┃ "  + ChatColor.WHITE + "Elo Statistics";
     }
 
+    @Override
     public List<String> getDescription(Player player) {
-        ArrayList description2 = Lists.newArrayList();
-        description2.add(ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "----------------");
+        List<String> description = Lists.newArrayList();
+
+        description.add(ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "----------------");
+
         for (KitType kitType : KitType.getAllTypes()) {
-            if (!kitType.isSupportsRanked()) continue;
-            description2.add(ChatColor.DARK_PURPLE + kitType.getDisplayName() + ChatColor.GRAY + ": " + eloHandler.getElo(player, kitType));
+            if (kitType.isSupportsRanked()) {
+                description.add(CC.translate("&7┃ ") + ChatColor.WHITE + kitType.getDisplayName() + ChatColor.GRAY + ": " + ChatColor.GREEN + eloHandler.getElo(player, kitType));
+            }
         }
-        description2.add(ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "----------------");
-        description2.add(ChatColor.DARK_PURPLE + "Global" + ChatColor.GRAY + ": " + eloHandler.getGlobalElo(player.getUniqueId()));
-        description2.add(ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "----------------");
-        return description2;
+
+        description.add(ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "----------------");
+        description.add(CC.translate("&7┃ ") + ChatColor.YELLOW + "Global" + ChatColor.GRAY + ": " + ChatColor.GREEN + eloHandler.getGlobalElo(player.getUniqueId()));
+        description.add(ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "----------------");
+
+        return description;
     }
 
+    @Override
     public Material getMaterial(Player player) {
         return Material.SKULL_ITEM;
     }
 
+    @Override
     public byte getDamageValue(Player player) {
-        return 3;
-    }
-
-    private String getColoredName(Player player) {
-        return player.getName();
+        return (byte) 3;
     }
 }
-

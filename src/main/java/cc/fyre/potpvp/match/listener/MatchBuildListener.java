@@ -54,7 +54,7 @@ implements Listener {
             event.setCancelled(true);
         } else {
             MatchTeam team;
-            if (match.getKitType().getId().equalsIgnoreCase("bedfight") && (team = match.getTeam(player.getUniqueId())) != null && team.getSpawnLoc().distance(event.getBlock().getLocation()) <= 7.0 && event.getBlock().getLocation().getBlockY() >= team.getSpawnLoc().getBlockY()) {
+            if (match.getKitType().getId().equalsIgnoreCase("BedFight") && (team = match.getTeam(player.getUniqueId())) != null && team.getSpawnLoc().distance(event.getBlock().getLocation()) <= 7.0 && event.getBlock().getLocation().getBlockY() >= team.getSpawnLoc().getBlockY()) {
                 return;
             }
             if (!match.canBeBroken(event.getBlock())) {
@@ -79,7 +79,7 @@ implements Listener {
             event.setCancelled(true);
             return;
         }
-        if (match.getKitType().getId().equalsIgnoreCase("pearlfight")) {
+        if (match.getKitType().getId().equalsIgnoreCase("PearlFight")) {
             new BukkitRunnable(){
 
                 public void run() {
@@ -88,8 +88,8 @@ implements Listener {
             }.runTaskLater((Plugin)PotPvP.getInstance(), 100L);
             return;
         }
-        if (match.getKitType().getId().equalsIgnoreCase("bridges") || match.getKitType().getId().equalsIgnoreCase("bedfight")) {
-            if (match.getKitType().getId().equalsIgnoreCase("bridges")) {
+        if (match.getKitType().getId().equalsIgnoreCase("Bridges") || match.getKitType().getId().equalsIgnoreCase("BedFight")) {
+            if (match.getKitType().getId().equalsIgnoreCase("Bridges")) {
                 int i;
                 if (event.getBlock().getType() == Material.STATIONARY_LAVA || event.getBlock().getType() == Material.STATIONARY_LAVA) {
                     event.setCancelled(true);
@@ -172,10 +172,10 @@ implements Listener {
     }
 
     private boolean canBePlaced(Block placedBlock, Match match) {
-        if (match.getKitType().getId().equalsIgnoreCase("bridges")) {
+        if (match.getKitType().getId().equalsIgnoreCase("Bridges")) {
             return true;
         }
-        if (match.getKitType().getId().equalsIgnoreCase("bedfight")) {
+        if (match.getKitType().getId().equalsIgnoreCase("BedFight")) {
             return true;
         }
         for (int x = -3; x <= 3; ++x) {

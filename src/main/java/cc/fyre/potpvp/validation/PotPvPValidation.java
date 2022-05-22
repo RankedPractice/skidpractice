@@ -272,7 +272,7 @@ public final class PotPvPValidation {
             initiator.sendMessage(CANNOT_DO_THIS_WHILST_IN_TOURNAMENT);
             return false;
         }
-        if (type2 != null && type2.getId().equals("MLGRUSH")) {
+        if (type2 != null && type2.getId().equals("MLGRush")) {
             initiator.sendMessage(ChatColor.RED + "You cannot play MLGRush in a party ffa.");
             return false;
         }

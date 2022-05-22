@@ -57,7 +57,7 @@ public final class Kit {
     public void apply(Player player) {
         PatchedPlayerUtils.resetInventory(player);
         Match match = PotPvP.getInstance().getMatchHandler().getMatchPlaying(player);
-        if (match.getKitType().getId().equalsIgnoreCase("Bridges") || match.getKitType().getId().equalsIgnoreCase("bedfight")) {
+        if (match.getKitType().getId().equalsIgnoreCase("Bridges") || match.getKitType().getId().equalsIgnoreCase("BedFight")) {
             ItemStack redHelmet = ItemBuilder.of((Material)Material.LEATHER_HELMET).color(Color.RED).build();
             ItemStack redChestplate = ItemBuilder.of((Material)Material.LEATHER_CHESTPLATE).color(Color.RED).build();
             ItemStack redLeggings = ItemBuilder.of((Material)Material.LEATHER_LEGGINGS).color(Color.RED).build();

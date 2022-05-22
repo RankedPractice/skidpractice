@@ -120,7 +120,7 @@ public final class MatchHandler {
         }
         long matchSize = teams.stream().mapToInt(t -> t.getAllMembers().size()).sum();
         ArenaHandler arenaHandler = PotPvP.getInstance().getArenaHandler();
-        Optional<Arena> openArenaOpt = arenaSchematic == null ? arenaHandler.allocateUnusedArena(schematic -> schematic.isEnabled() /*&& schematic.getEvent() == null*/ && !schematic.isTeamFightsOnly() && MatchHandler.canUseSchematic(kitType, schematic) && matchSize <= (long)schematic.getMaxPlayerCount() && matchSize >= (long)schematic.getMinPlayerCount() && (!queueType.isRanked() && !queueType.isPremium() || schematic.isSupportsRanked()) && (kitType.getId().equals("ARCHER") || !schematic.isArcherOnly())) : arenaHandler.allocateUnusedArena(schematic -> schematic.equals(arenaSchematic) && schematic.isEnabled() /*&& schematic.getEvent() == null*/ && !schematic.isTeamFightsOnly() && MatchHandler.canUseSchematic(kitType, schematic) && matchSize <= (long)schematic.getMaxPlayerCount() && matchSize >= (long)schematic.getMinPlayerCount() && (!queueType.isRanked() && !queueType.isPremium() || schematic.isSupportsRanked()) && (kitType.getId().equals("ARCHER") || !schematic.isArcherOnly()));
+        Optional<Arena> openArenaOpt = arenaSchematic == null ? arenaHandler.allocateUnusedArena(schematic -> schematic.isEnabled() /*&& schematic.getEvent() == null*/ && !schematic.isTeamFightsOnly() && MatchHandler.canUseSchematic(kitType, schematic) && matchSize <= (long)schematic.getMaxPlayerCount() && matchSize >= (long)schematic.getMinPlayerCount() && (!queueType.isRanked() && !queueType.isPremium() || schematic.isSupportsRanked()) && (kitType.getId().equals("Archer") || !schematic.isArcherOnly())) : arenaHandler.allocateUnusedArena(schematic -> schematic.equals(arenaSchematic) && schematic.isEnabled() /*&& schematic.getEvent() == null*/ && !schematic.isTeamFightsOnly() && MatchHandler.canUseSchematic(kitType, schematic) && matchSize <= (long)schematic.getMaxPlayerCount() && matchSize >= (long)schematic.getMinPlayerCount() && (!queueType.isRanked() && !queueType.isPremium() || schematic.isSupportsRanked()) && (kitType.getId().equals("Archer") || !schematic.isArcherOnly()));
         if (kitType.equals(KitType.teamFight)) {
             openArenaOpt = arenaHandler.allocateUnusedArena(schematic -> schematic.isEnabled() /*&& schematic.getEvent() == null*/ && MatchHandler.canUseSchematic(kitType, schematic) && matchSize <= (long)schematic.getMaxPlayerCount() && matchSize >= (long)schematic.getMinPlayerCount() && schematic.isTeamFightsOnly());
         }
@@ -139,25 +139,25 @@ public final class MatchHandler {
         /*if (schematic.getEvent() != null) {
             return false;
         }*/
-        if (kitId.equals("ARCHER")) {
+        if (kitId.equals("Archer")) {
             return schematic.isArcherOnly();
         }
-        if (kitId.equals("BUILDUHC")) {
+        if (kitId.equals("BuildUHC")) {
             return schematic.isBuildUHCOnly();
         }
-        if (kitId.equals("SPLEEF")) {
+        if (kitId.equals("Spleef")) {
             return schematic.isSpleefOnly();
         }
-        if (kitId.equalsIgnoreCase("BRIDGES")) {
+        if (kitId.equalsIgnoreCase("Bridges")) {
             return schematic.isBridgesOnly();
         }
-        if (kitId.equalsIgnoreCase("MLGRUSH")) {
+        if (kitId.equalsIgnoreCase("MLGRush")) {
             return schematic.isMlgOnly();
         }
-        if (kitId.equalsIgnoreCase("BEDFIGHT")) {
+        if (kitId.equalsIgnoreCase("BedFight")) {
             return schematic.isBedFightsOnly();
         }
-        if (kitId.equals("SUMO")) {
+        if (kitId.equals("Sumo")) {
             return schematic.isSumoOnly();
         }
         if (kitId.equals("HCF")) {
@@ -167,25 +167,25 @@ public final class MatchHandler {
             return schematic.isTeamFightsOnly();
         }
         if (schematic.isArcherOnly()) {
-            return kitId.equalsIgnoreCase("ARCHER");
+            return kitId.equalsIgnoreCase("Archer");
         }
         if (schematic.isBuildUHCOnly()) {
-            return kitId.equalsIgnoreCase("BUILDUHC");
+            return kitId.equalsIgnoreCase("BuildUHC");
         }
         if (schematic.isSpleefOnly()) {
-            return kitId.equalsIgnoreCase("SPLEEF");
+            return kitId.equalsIgnoreCase("Spleef");
         }
         if (schematic.isMlgOnly()) {
-            return kitId.equalsIgnoreCase("MLGRUSH");
+            return kitId.equalsIgnoreCase("MLGRush");
         }
         if (schematic.isBridgesOnly()) {
-            return kitId.equalsIgnoreCase("BRIDGES");
+            return kitId.equalsIgnoreCase("Bridges");
         }
         if (schematic.isBedFightsOnly()) {
-            return kitId.equalsIgnoreCase("BEDFIGHT");
+            return kitId.equalsIgnoreCase("BedFight");
         }
         if (schematic.isSumoOnly()) {
-            return kitId.equalsIgnoreCase("SUMO");
+            return kitId.equalsIgnoreCase("Sumo");
         }
         if (schematic.isHCFOnly()) {
             return kitId.equalsIgnoreCase("HCF");

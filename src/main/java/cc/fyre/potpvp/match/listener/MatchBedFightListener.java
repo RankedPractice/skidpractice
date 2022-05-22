@@ -57,7 +57,7 @@ implements Listener {
         if (oppositeTeam == null) {
             return;
         }
-        if (match.getKitType().getId().equalsIgnoreCase("BEDFIGHT") && block.getType() == Material.BED_BLOCK) {
+        if (match.getKitType().getId().equalsIgnoreCase("BedFight") && block.getType() == Material.BED_BLOCK) {
             int bedBrokenTeam = this.getMatchTeam(match, block);
             if (bedBrokenTeam == oppositeTeam.getId()) {
                 oppositeTeam.setBedBroken(true);
@@ -84,7 +84,7 @@ implements Listener {
             if (match == null) {
                 return;
             }
-            if (!match.getKitType().getId().equalsIgnoreCase("bedfight")) {
+            if (!match.getKitType().getId().equalsIgnoreCase("BedFight")) {
                 return;
             }
             match.getKills().put(player.getKiller().getUniqueId(), match.getKills().get(player.getKiller().getUniqueId()) + 1);

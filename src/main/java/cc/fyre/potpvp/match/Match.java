@@ -189,7 +189,7 @@ public final class Match {
                 }
                 playingCache.put(player.getUniqueId(), this);
                 Location spawn = (team == this.teams.get(0) ? this.arena.getTeam1Spawn() : this.arena.getTeam2Spawn()).clone();
-                if (this.kitType.getId().equalsIgnoreCase("bedfight")) {
+                if (this.kitType.getId().equalsIgnoreCase("BedFight")) {
                     spawn = (team == this.teams.get(0) ? this.arena.getBlueSpawnSpawn() : this.arena.getRedSpawn()).clone();
                 }
                 Vector oldDirection = spawn.getDirection();
@@ -218,7 +218,7 @@ public final class Match {
         new BukkitRunnable(){
             int countdownTimeRemaining;
             {
-                this.countdownTimeRemaining = Match.this.kitType.getId().equals("SUMO") ? 5 : 5;
+                this.countdownTimeRemaining = Match.this.kitType.getId().equals("Sumo") ? 5 : 5;
             }
 
             public void run() {
@@ -243,7 +243,7 @@ public final class Match {
     private void startMatch() {
         this.state = MatchState.IN_PROGRESS;
         this.startedAt = new Date();
-        this.messageAll(ChatColor.GREEN + (this.kitType.id.equals("SUMO") && this.queueType.isRanked() ? "The round has started!" : "The match has started!"));
+        this.messageAll(ChatColor.GREEN + (this.kitType.id.equals("Sumo") && this.queueType.isRanked() ? "The round has started!" : "The match has started!"));
         Bukkit.getPluginManager().callEvent((Event)new MatchStartEvent(this));
         for (Location bedLoc : this.arena.getBedLocs()) {
             bedLoc.getBlock().setType(Material.BED);
@@ -337,8 +337,8 @@ public final class Match {
         if (this.state == MatchState.ENDING || this.state == MatchState.TERMINATED) {
             return;
         }
-        if (!this.getKitType().getId().equalsIgnoreCase("boxing")) {
-            if (this.getKitType().getId().equalsIgnoreCase("bridges")) {
+        if (!this.getKitType().getId().equalsIgnoreCase("Boxing")) {
+            if (this.getKitType().getId().equalsIgnoreCase("Bridges")) {
                 for (MatchTeam team : this.teams) {
                     if (this.wins.get(team) < 3) continue;
                     this.winner = team;
@@ -346,7 +346,7 @@ public final class Match {
                 }
             } else {
                 ArrayList<MatchTeam> teamsAlive = new ArrayList<MatchTeam>();
-                if (this.getKitType().getId().equalsIgnoreCase("bedfight")) {
+                if (this.getKitType().getId().equalsIgnoreCase("BedFight")) {
                     for (MatchTeam team : this.teams) {
                         if (team.bedBroken || team.getAliveMembers().isEmpty()) continue;
                         teamsAlive.add(team);
@@ -464,7 +464,7 @@ public final class Match {
             kit.apply(player);
             return;
         }
-        if (this.kitType.getId().equals("MLGRUSH")) {
+        if (this.kitType.getId().equals("MLGRush")) {
             this.addSpectator(player, null, true);
         }
         Map<UUID, Match> playingCache = PotPvP.getInstance().getMatchHandler().getPlayingMatchCache();
@@ -484,7 +484,7 @@ public final class Match {
         if (killer != null && this.getTeam(killer.getUniqueId()) != null && this.getTeams().contains(this.getTeam(killer.getUniqueId()))) {
             this.kills.put(killer.getUniqueId(), this.kills.get(killer.getUniqueId()) + 1);
         }
-        if (this.getKitType().getId().equalsIgnoreCase("bridges")) {
+        if (this.getKitType().getId().equalsIgnoreCase("Bridges")) {
             Location spawn = team.getSpawnLoc();
             Vector oldDirection = spawn.getDirection();
             Block block = spawn.getBlock();
@@ -501,7 +501,7 @@ public final class Match {
             this.getUsedKit().getOrDefault(player.getUniqueId(), Kit.ofDefaultKit(this.getKitType())).apply(player);
             return;
         }
-        if (this.getKitType().getId().equalsIgnoreCase("bedfight") && !team.bedBroken) {
+        if (this.getKitType().getId().equalsIgnoreCase("BedFight") && !team.bedBroken) {
             this.respawnTask(player, 3);
             return;
         }
@@ -641,7 +641,7 @@ public final class Match {
     }
 
     public boolean canBeBroken(Block block) {
-        return this.kitType.getId().equals("SPLEEF") && (block.getType() == Material.SNOW_BLOCK || block.getType() == Material.GRASS || block.getType() == Material.DIRT) || this.placedBlocks.contains(block.getLocation().toVector().toBlockVector());
+        return this.kitType.getId().equals("Spleef") && (block.getType() == Material.SNOW_BLOCK || block.getType() == Material.GRASS || block.getType() == Material.DIRT) || this.placedBlocks.contains(block.getLocation().toVector().toBlockVector());
     }
 
     public String get_id() {
